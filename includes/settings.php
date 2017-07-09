@@ -87,7 +87,7 @@ $args = array(
 	// Allows dynamic CSS to be generated for customizer and google fonts, but stops the dynamic CSS from going to the head
 	// 'footer_credit'     => '',                   // Disable the footer credit of Redux. Please leave if you can help it.
 	// FUTURE -> Not in use yet, but reserved or partially implemented. Use at your own risk.
-	'database'             => ( is_multisite() ? 'database' : '' ),
+	'database'             => ( is_multisite() ? 'network' : '' ),
 	// possible: options, theme_mods, theme_mods_expanded, transient. Not fully functional, warning!
 	'use_cdn'              => false,
 	// If you prefer not to use the CDN for Select2, Ace Editor, and others, you may download the Redux Vendor Support plugin yourself and run locally or embed it in your code.
