@@ -1,0 +1,287 @@
+# Copyright (C) 2017 HandyPlugins, Mustafa Uysal
+# This file is distributed under the same license as the WP Total Branding package.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Total Branding 1.0\n"
+"Report-Msgid-Bugs-To: "
+"https://wordpress.org/support/plugin/wp-total-branding\n"
+"POT-Creation-Date: 2017-07-09 15:24:09+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2017-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: grunt-wp-i18n 0.5.4\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_"
+"attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Country: United States\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-Bookmarks: \n"
+"X-Textdomain-Support: yes\n"
+
+#: includes/options/admin-bar.php:8
+msgid "Admin Bar"
+msgstr ""
+
+#: includes/options/admin-bar.php:10 includes/options/custom-css.php:5
+#: includes/options/dashboard.php:10
+msgid "Change WordPress dashboard screen"
+msgstr ""
+
+#: includes/options/admin-bar.php:17
+msgid "Hide WordPress Logos"
+msgstr ""
+
+#: includes/options/admin-bar.php:27
+msgid "Custom Admin Bar Logo"
+msgstr ""
+
+#: includes/options/admin-bar.php:31
+msgid "32px X 32px fits good"
+msgstr ""
+
+#: includes/options/admin-menu.php:26
+msgid "Admin Menu"
+msgstr ""
+
+#: includes/options/admin-menu.php:34
+msgid "Choose menu items to remove"
+msgstr ""
+
+#: includes/options/admin-message.php:8
+msgid "Admin Message"
+msgstr ""
+
+#: includes/options/admin-message.php:17
+msgid "Enable admin message"
+msgstr ""
+
+#: includes/options/admin-message.php:27
+msgid "Message"
+msgstr ""
+
+#: includes/options/custom-css.php:3
+msgid "Custom CSS"
+msgstr ""
+
+#: includes/options/custom-css.php:11
+msgid "Login CSS"
+msgstr ""
+
+#: includes/options/custom-css.php:21 includes/options/custom-css.php:49
+#: includes/options/custom-css.php:77
+msgid "Switch On"
+msgstr ""
+
+#: includes/options/custom-css.php:28 includes/options/custom-css.php:56
+#: includes/options/custom-css.php:84
+msgid "CSS Code"
+msgstr ""
+
+#: includes/options/custom-css.php:29 includes/options/custom-css.php:57
+#: includes/options/custom-css.php:85
+msgid "Paste your CSS code here."
+msgstr ""
+
+#: includes/options/custom-css.php:39
+msgid "Admin CSS"
+msgstr ""
+
+#: includes/options/custom-css.php:67
+msgid "Frontend CSS"
+msgstr ""
+
+#: includes/options/dashboard.php:8
+msgid "Dashboard"
+msgstr ""
+
+#: includes/options/dashboard.php:17
+msgid "Hide dashboard welcome screen"
+msgstr ""
+
+#: includes/options/dashboard.php:23
+msgid "Remove dashboard widgets"
+msgstr ""
+
+#: includes/options/dashboard.php:30
+msgid "Dashboard Footer Content"
+msgstr ""
+
+#: includes/options/email.php:9
+msgid "Email"
+msgstr ""
+
+#: includes/options/email.php:11
+msgid "Change default email sender info"
+msgstr ""
+
+#: includes/options/email.php:18
+msgid "Enable email branding"
+msgstr ""
+
+#: includes/options/global-content.php:10
+msgid "Global Content"
+msgstr ""
+
+#: includes/options/global-content.php:19
+msgid "Enable global contents"
+msgstr ""
+
+#: includes/options/global-content.php:28
+msgid "Header"
+msgstr ""
+
+#: includes/options/global-content.php:29
+msgid ""
+"will be display on every page of your network. You can add tracking code, "
+"embeds, etc."
+msgstr ""
+
+#: includes/options/global-content.php:43
+msgid "Footer"
+msgstr ""
+
+#: includes/options/login.php:8
+msgid "Login logo"
+msgstr ""
+
+#: includes/options/login.php:13
+msgid "Change default WordPress login logo by uploading new one, visit: "
+msgstr ""
+
+#: includes/options/login.php:18
+msgid "Enable custom logo"
+msgstr ""
+
+#: includes/options/login.php:26
+msgid "Login Logo"
+msgstr ""
+
+#: includes/options/login.php:28
+msgid "Upload a logo "
+msgstr ""
+
+#: includes/options/login.php:32
+msgid "Logo size"
+msgstr ""
+
+#: includes/options/login.php:33
+msgid "Please use max 320px for best result."
+msgstr ""
+
+#: includes/options/login.php:39
+msgid "Header Title"
+msgstr ""
+
+#: includes/options/login.php:45
+msgid "Header URL"
+msgstr ""
+
+#: includes/options/login.php:46
+msgid "Target URL when clicking login logo"
+msgstr ""
+
+#: includes/options/rest-api.php:9
+msgid "Rest API"
+msgstr ""
+
+#: includes/options/rest-api.php:18
+msgid "REST-API status"
+msgstr ""
+
+#: includes/options/rest-api.php:19
+msgid "You can control REST-API"
+msgstr ""
+
+#: includes/options/rest-api.php:27
+msgid "Modify url base from wp-json to custom"
+msgstr ""
+
+#: includes/options/rest-api.php:32
+msgid "Do not forget to update rewrite"
+msgstr ""
+
+#: includes/options/rest-api.php:33
+msgid "Flush rewrite rules by visiting permalinks after the change"
+msgstr ""
+
+#: includes/options/site-generator.php:8
+msgid "Site Generator"
+msgstr ""
+
+#: includes/options/site-generator.php:16
+msgid "Remove site generator info"
+msgstr ""
+
+#: includes/options/site-generator.php:19
+msgid "Generator"
+msgstr ""
+
+#: includes/options/site-generator.php:20
+msgid "Remove generator meta tags from pages"
+msgstr ""
+
+#: includes/settings.php:31
+msgid "Total Branding"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "WP Total Branding"
+msgstr ""
+
+#: includes/settings.php:131
+msgid ""
+"<p>Did you know that Redux sets a global variable for you? To access any of "
+"your saved options from within your code you can use your global variable: "
+"<strong>$%1$s</strong></p>"
+msgstr ""
+
+#: includes/settings.php:133
+msgid ""
+"<p>This text is displayed above the options panel. It isn't required, but "
+"more info is always better! The intro_text field accepts all HTML.</p>"
+msgstr ""
+
+#: includes/settings.php:136
+msgid ""
+"<p>This text is displayed below the options panel. It isn't required, but "
+"more info is always better! The footer_text field accepts all HTML.</p>"
+msgstr ""
+
+#: wp-total-branding.php:161
+msgid "Your site does not support WP Total Branding."
+msgstr ""
+
+#: wp-total-branding.php:163
+msgid ""
+"Your site is currently running WordPress version %1$s, while WP Total "
+"Branding requires version %2$s or greater."
+msgstr ""
+
+#: wp-total-branding.php:165
+msgid "Please update your WordPress or deactivate WP Total Branding."
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://handyplugins.co/product/wp-total-branding/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Make your WordPress setup unique. Change or remove WordPress footprints and "
+"much more..."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "HandyPlugins, Mustafa Uysal"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://handyplugins.co"
+msgstr ""
