@@ -37,7 +37,7 @@ class WPTB_Admin {
 		$cap = is_multisite() ? 'manage_network' : 'manage_options';
 
 		if ( is_user_logged_in() && current_user_can( $cap ) ) {
-			update_option( 'wptb_admin_menu', $menu );
+			update_site_option( 'wptb_admin_menu', $menu );
 		}
 
 	}

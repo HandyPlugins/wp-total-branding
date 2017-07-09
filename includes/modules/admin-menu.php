@@ -11,8 +11,11 @@ function wptb_remove_admin_menu() {
 	$admin_menus   = wptb_get_option( 'removed-admin-menu' );
 	$original_menu = $menu;
 
+//	var_dump(wptb_get_option( 'removed-admin-menu' ));exit;
+
+
 	foreach ( (array) $admin_menus as $page => $status ) {
-		if ( true === (bool) $status ) {
+		if ( 1 === (int) $status ) {
 			remove_menu_page( $page );
 		}
 	}
@@ -21,7 +24,7 @@ function wptb_remove_admin_menu() {
 
 	// put back original list
 	if ( current_user_can( $cap ) ) {
-		update_option( 'wptb_admin_menu', $original_menu );
+		update_site_option( 'wptb_admin_menu', $original_menu );
 	}
 
 }

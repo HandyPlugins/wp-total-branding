@@ -4,7 +4,7 @@ if ( ! class_exists( 'Redux' ) ) {
 	return;
 }
 
-$menus = get_option( 'wptb_admin_menu' );
+$menus = get_site_option( 'wptb_admin_menu' );
 
 
 $menu_options = array();
