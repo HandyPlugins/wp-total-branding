@@ -47,9 +47,9 @@ $args = array(
 	// Choose an priority for the admin bar menu
 	'global_variable'      => '',
 	// Set a different name for your global variable other than the opt_name
-	'dev_mode'             => true,
+	'dev_mode'             => false,
 	// Show the time the page took to load, etc
-	'update_notice'        => true,
+	'update_notice'        => false,
 	// If dev_mode is enabled, will notify developer of updated versions available in the GitHub Repo
 	'customizer'           => false,
 	// Enable basic customizer support
@@ -85,7 +85,7 @@ $args = array(
 	// Global shut-off for dynamic CSS output by the framework. Will also disable google fonts output
 	'output_tag'           => true,
 	// Allows dynamic CSS to be generated for customizer and google fonts, but stops the dynamic CSS from going to the head
-	// 'footer_credit'     => '',                   // Disable the footer credit of Redux. Please leave if you can help it.
+	 'footer_credit'     => ' ',                   // Disable the footer credit of Redux. Please leave if you can help it.
 	// FUTURE -> Not in use yet, but reserved or partially implemented. Use at your own risk.
 	'database'             => ( is_multisite() ? 'network' : '' ),
 	// possible: options, theme_mods, theme_mods_expanded, transient. Not fully functional, warning!
@@ -122,18 +122,7 @@ $args = array(
 	),
 );
 
-if ( ! isset( $args['global_variable'] ) || $args['global_variable'] !== false ) {
-	if ( ! empty( $args['global_variable'] ) ) {
-		$v = $args['global_variable'];
-	} else {
-		$v = str_replace( '-', '_', $args['opt_name'] );
-	}
-	$args['intro_text'] = sprintf( __( '<p>Did you know that Redux sets a global variable for you? To access any of your saved options from within your code you can use your global variable: <strong>$%1$s</strong></p>', 'wp-total-branding' ), $v );
-} else {
-	$args['intro_text'] = __( '<p>This text is displayed above the options panel. It isn\'t required, but more info is always better! The intro_text field accepts all HTML.</p>', 'wp-total-branding' );
-}
-// Add content after the form.
-$args['footer_text'] = __( '<p>This text is displayed below the options panel. It isn\'t required, but more info is always better! The footer_text field accepts all HTML.</p>', 'wp-total-branding' );
+
 Redux::setArgs( $opt_name, $args );
 
 
