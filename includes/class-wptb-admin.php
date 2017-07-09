@@ -23,6 +23,8 @@ class WPTB_Admin {
 		}
 
 		add_action( 'admin_menu', array( $this, 'set_global_menu' ) );
+
+		add_action( 'redux/loaded', array( $this, 'maybe_remove_admin_menu' ) );
 	}
 
 	/**
@@ -38,6 +40,21 @@ class WPTB_Admin {
 			update_option( 'wptb_admin_menu', $menu );
 		}
 
+	}
+
+	/**
+	 * Remove admin settings on multisite setups
+	 *
+	 * @since 1.0
+	 *
+	 * @param $redux
+	 */
+	public function maybe_remove_admin_menu( $redux ) {
+		if ( is_multisite() ) {
+			remove_action( 'admin_menu', array( $redux, '_options_page' ) );
+		}
+
+		return;
 	}
 
 
