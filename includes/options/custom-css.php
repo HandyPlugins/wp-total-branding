@@ -11,14 +11,12 @@ Redux::setSection( $opt_name, array(
 	'title'            => __( 'Login CSS', 'wp-total-branding' ),
 	'id'               => 'basic-login-css',
 	'subsection'       => true,
-	//	'icon'             => 'el el-css',
 	'customizer_width' => '500px',
-	//	'desc'             => __( 'For full documentation on this field, visit: ', 'wp-total-branding' ) . '<a href="//docs.reduxframework.com/core/fields/radio/" target="_blank">docs.reduxframework.com/core/fields/radio/</a>',
 	'fields'           => array(
 		array(
 			'id'      => 'custom-css-login-enable',
 			'type'    => 'switch',
-			'title'   => __( 'Switch On', 'wp-total-branding' ),
+			'title'   => __( 'Module Status', 'wp-total-branding' ),
 			'default' => 0,
 		),
 		array(
@@ -39,14 +37,12 @@ Redux::setSection( $opt_name, array(
 	'title'            => __( 'Admin CSS', 'wp-total-branding' ),
 	'id'               => 'opt-admin-css',
 	'subsection'       => true,
-	//	'desc'             => __( 'Change WordPress dashboard screen', 'wp-total-branding' ),
 	'customizer_width' => '400px',
-	//	'icon'             => 'el el-css',
 	'fields'           => array(
 		array(
 			'id'      => 'custom-css-admin-enable',
 			'type'    => 'switch',
-			'title'   => __( 'Switch On', 'wp-total-branding' ),
+			'title'   => __( 'Module Status', 'wp-total-branding' ),
 			'default' => false,
 		),
 		array(
@@ -67,14 +63,12 @@ Redux::setSection( $opt_name, array(
 	'title'            => __( 'Frontend CSS', 'wp-total-branding' ),
 	'id'               => 'opt-frontend-css',
 	'subsection'       => true,
-	//	'desc'             => __( 'Change WordPress dashboard screen', 'wp-total-branding' ),
 	'customizer_width' => '400px',
-	//	'icon'             => 'el el-css',
 	'fields'           => array(
 		array(
 			'id'      => 'custom-css-site-enable',
 			'type'    => 'switch',
-			'title'   => __( 'Switch On', 'wp-total-branding' ),
+			'title'   => __( 'Module Status', 'wp-total-branding' ),
 			'default' => false,
 		),
 		array(
