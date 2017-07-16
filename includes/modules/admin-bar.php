@@ -5,10 +5,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $status = (bool) wptb_get_option( 'hide-wp-admin-bar-logo' );
-if ( true === $status ) {
-	remove_action( 'admin_bar_menu', 'wp_admin_bar_wp_menu', 10 );
+if ( true === $status ) { // hooked only when hiden
+	add_action( 'admin_init', 'wptb_maybe_remove_admin_bar_logo' );
 
 	return;
+}
+
+/**
+ * Remove default admin bar logo
+ */
+function wptb_maybe_remove_admin_bar_logo() {
+	remove_action( 'admin_bar_menu', 'wp_admin_bar_wp_menu', 10 );
 }
 
 
