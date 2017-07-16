@@ -6,6 +6,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 add_action( 'wp_footer', 'wptb_render_global_content' );
 
+/**
+ * Injects header content after the body and puts footer content.
+ * @since 1.0
+ */
 function wptb_render_global_content() {
 
 	$enable_global_content = (bool) wptb_get_option( 'global-content-enable' );

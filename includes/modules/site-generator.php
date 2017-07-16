@@ -27,6 +27,15 @@ add_filter( 'get_the_generator_rdf', 'wptb_get_the_generator', PHP_INT_MAX, 2 );
 add_filter( 'get_the_generator_comment', 'wptb_get_the_generator', PHP_INT_MAX, 2 );
 add_filter( 'get_the_generator_export', 'wptb_get_the_generator', PHP_INT_MAX, 2 );
 
+/**
+ * Prepares generator output
+ *
+ * @param string $gen
+ * @param string $type
+ *
+ * @since 1.0
+ * @return string
+ */
 function wptb_get_the_generator( $gen, $type ) {
 	$generator_name = wptb_get_option( 'generator-text' );
 	$generator_link = esc_url( wptb_get_option( 'generator-link' ) );

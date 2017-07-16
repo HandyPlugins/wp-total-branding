@@ -5,11 +5,9 @@ if ( ! class_exists( 'Redux' ) ) {
 	return;
 }
 
-// -> START Basic Fields
 Redux::setSection( $opt_name, array(
 	'title'            => __( 'Global Content', 'wp-total-branding' ),
 	'id'               => 'global-content',
-	//	'desc'             => __( 'Add global content, networkwide', 'wp-total-branding' ),
 	'customizer_width' => '400px',
 	'icon'             => 'el el-globe-alt',
 	'fields'           => array(
@@ -46,10 +44,7 @@ Redux::setSection( $opt_name, array(
 				'wpautop'       => false,
 				'media_buttons' => false,
 				'textarea_rows' => 5,
-				//'tabindex' => 1,
-				//'editor_css' => '',
 				'teeny'         => false,
-				//'tinymce' => array(),
 				'quicktags'     => true,
 			),
 		),

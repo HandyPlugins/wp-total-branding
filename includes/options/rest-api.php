@@ -8,7 +8,6 @@ if ( ! class_exists( 'Redux' ) ) {
 Redux::setSection( $opt_name, array(
 	'title'            => __( 'Rest API', 'wp-total-branding' ),
 	'id'               => 'rest-api',
-	//	'desc'             => __( 'Control REST-API easily', 'wp-total-branding' ),
 	'customizer_width' => '400px',
 	'icon'             => 'el el-network',
 	'fields'           => array(
