@@ -33,3 +33,8 @@ Our knowledge base is available on [handyplugins.co/wptb-docs/](https://handyplu
 2. Activate the WP Total branding plugin through the 'Plugins' menu in WordPress. (If you are using multisite, activate network wide)
 3. That's all.
 
+
+## Credits
+
+* [Redux Framework](https://github.com/reduxframework/redux-framework) for beautiful admin interface.
+* [redux-vendor-support](https://github.com/reduxframework/redux-vendor-support) for supplying vendor libraries, in place of CDN
