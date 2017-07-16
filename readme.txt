@@ -7,7 +7,7 @@ Stable tag: 1.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Make your WordPress setup unique. Change or remove WordPress footprints and much more...
+Make your WordPress setup unique. Change or remove WordPress footprints,features and much more...
 
 == Description ==
 
