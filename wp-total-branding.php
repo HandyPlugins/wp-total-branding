@@ -2,7 +2,7 @@
 /**
  * Plugin Name:     WP Total Branding
  * Plugin URI:      https://handyplugins.co/product/wp-total-branding/
- * Description:     Make your WordPress setup unique. Change or remove WordPress footprints and much more...
+ * Description:     Simple and powerful branding solution for WordPress.
  * Author:          HandyPlugins, Mustafa Uysal
  * Author URI:      https://handyplugins.co
  * Text Domain:     wp-total-branding

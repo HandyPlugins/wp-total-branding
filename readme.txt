@@ -1,5 +1,5 @@
 === WP Total Branding ===
-Contributors: m_uysl
+Contributors: handyplugins, m_uysl
 Tags: branding, custom-logo, admin menu, customize
 Requires at least: 4.0
 Tested up to: 4.8

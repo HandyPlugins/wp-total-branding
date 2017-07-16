@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: WP Total Branding 1.0\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/wp-total-branding\n"
-"POT-Creation-Date: 2017-07-16 12:22:45+00:00\n"
+"POT-Creation-Date: 2017-07-16 14:46:15+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -254,9 +254,7 @@ msgid "https://handyplugins.co/product/wp-total-branding/"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid ""
-"Make your WordPress setup unique. Change or remove WordPress footprints and "
-"much more..."
+msgid "Simple and powerful branding solution for WordPress."
 msgstr ""
 
 #. Author of the plugin/theme
