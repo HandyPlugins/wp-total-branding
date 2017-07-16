@@ -9,6 +9,12 @@ $menus = get_site_option( 'wptb_admin_menu' );
 
 $menu_options = array();
 foreach ( (array) $menus as $item ) {
+
+	// Link Manager removed in WordPress 3.5
+	if ( 'menu-links' === $item[5] ) {
+		continue;
+	}
+
 	if ( ! empty( $item[0] ) ) {
 		$menu_options[ $item[2] ] = trim( preg_replace( '#<span[^>]*>(.*)</span>(.*)</span>#isU', "", $item[0] ) );
 	}
