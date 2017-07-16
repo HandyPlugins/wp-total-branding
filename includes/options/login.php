@@ -10,7 +10,7 @@ Redux::setSection( $opt_name, array(
 	'subsection'       => false,
 	'icon'             => 'el el-screen',
 	'customizer_width' => '450px',
-	'desc'             => __( 'Change default WordPress login logo by uploading new one, visit: ', 'wp-total-branding' ),
+	'desc'             => __( 'Change default WordPress login logo by uploading new one.', 'wp-total-branding' ),
 	'fields'           => array(
 		array(
 			'id'      => 'login-logo-enable',
