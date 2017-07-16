@@ -11,9 +11,6 @@ function wptb_remove_admin_menu() {
 	$admin_menus   = wptb_get_option( 'removed-admin-menu' );
 	$original_menu = $menu;
 
-//	var_dump(wptb_get_option( 'removed-admin-menu' ));exit;
-
-
 	foreach ( (array) $admin_menus as $page => $status ) {
 		if ( 1 === (int) $status ) {
 			remove_menu_page( $page );
