@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: WP Total Branding 1.0\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/wp-total-branding\n"
-"POT-Creation-Date: 2017-07-09 15:24:09+00:00\n"
+"POT-Creation-Date: 2017-07-16 12:22:45+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -42,7 +42,7 @@ msgstr ""
 msgid "Custom Admin Bar Logo"
 msgstr ""
 
-#: includes/options/admin-bar.php:31
+#: includes/options/admin-bar.php:29
 msgid "32px X 32px fits good"
 msgstr ""
 
@@ -62,7 +62,7 @@ msgstr ""
 msgid "Enable admin message"
 msgstr ""
 
-#: includes/options/admin-message.php:27
+#: includes/options/admin-message.php:26
 msgid "Message"
 msgstr ""
 
@@ -74,26 +74,26 @@ msgstr ""
 msgid "Login CSS"
 msgstr ""
 
-#: includes/options/custom-css.php:21 includes/options/custom-css.php:49
-#: includes/options/custom-css.php:77
-msgid "Switch On"
+#: includes/options/custom-css.php:19 includes/options/custom-css.php:45
+#: includes/options/custom-css.php:71
+msgid "Module Status"
 msgstr ""
 
-#: includes/options/custom-css.php:28 includes/options/custom-css.php:56
-#: includes/options/custom-css.php:84
+#: includes/options/custom-css.php:26 includes/options/custom-css.php:52
+#: includes/options/custom-css.php:78
 msgid "CSS Code"
 msgstr ""
 
-#: includes/options/custom-css.php:29 includes/options/custom-css.php:57
-#: includes/options/custom-css.php:85
+#: includes/options/custom-css.php:27 includes/options/custom-css.php:53
+#: includes/options/custom-css.php:79
 msgid "Paste your CSS code here."
 msgstr ""
 
-#: includes/options/custom-css.php:39
+#: includes/options/custom-css.php:37
 msgid "Admin CSS"
 msgstr ""
 
-#: includes/options/custom-css.php:67
+#: includes/options/custom-css.php:63
 msgid "Frontend CSS"
 msgstr ""
 
@@ -125,25 +125,25 @@ msgstr ""
 msgid "Enable email branding"
 msgstr ""
 
-#: includes/options/global-content.php:10
+#: includes/options/global-content.php:9
 msgid "Global Content"
 msgstr ""
 
-#: includes/options/global-content.php:19
+#: includes/options/global-content.php:17
 msgid "Enable global contents"
 msgstr ""
 
-#: includes/options/global-content.php:28
+#: includes/options/global-content.php:26
 msgid "Header"
 msgstr ""
 
-#: includes/options/global-content.php:29
+#: includes/options/global-content.php:27
 msgid ""
 "will be display on every page of your network. You can add tracking code, "
 "embeds, etc."
 msgstr ""
 
-#: includes/options/global-content.php:43
+#: includes/options/global-content.php:41
 msgid "Footer"
 msgstr ""
 
@@ -152,7 +152,7 @@ msgid "Login logo"
 msgstr ""
 
 #: includes/options/login.php:13
-msgid "Change default WordPress login logo by uploading new one, visit: "
+msgid "Change default WordPress login logo by uploading new one."
 msgstr ""
 
 #: includes/options/login.php:18
@@ -191,23 +191,23 @@ msgstr ""
 msgid "Rest API"
 msgstr ""
 
-#: includes/options/rest-api.php:18
+#: includes/options/rest-api.php:17
 msgid "REST-API status"
 msgstr ""
 
-#: includes/options/rest-api.php:19
+#: includes/options/rest-api.php:18
 msgid "You can control REST-API"
 msgstr ""
 
-#: includes/options/rest-api.php:27
+#: includes/options/rest-api.php:26
 msgid "Modify url base from wp-json to custom"
 msgstr ""
 
-#: includes/options/rest-api.php:32
+#: includes/options/rest-api.php:31
 msgid "Do not forget to update rewrite"
 msgstr ""
 
-#: includes/options/rest-api.php:33
+#: includes/options/rest-api.php:32
 msgid "Flush rewrite rules by visiting permalinks after the change"
 msgstr ""
 
@@ -233,25 +233,6 @@ msgstr ""
 
 #. Plugin Name of the plugin/theme
 msgid "WP Total Branding"
-msgstr ""
-
-#: includes/settings.php:131
-msgid ""
-"<p>Did you know that Redux sets a global variable for you? To access any of "
-"your saved options from within your code you can use your global variable: "
-"<strong>$%1$s</strong></p>"
-msgstr ""
-
-#: includes/settings.php:133
-msgid ""
-"<p>This text is displayed above the options panel. It isn't required, but "
-"more info is always better! The intro_text field accepts all HTML.</p>"
-msgstr ""
-
-#: includes/settings.php:136
-msgid ""
-"<p>This text is displayed below the options panel. It isn't required, but "
-"more info is always better! The footer_text field accepts all HTML.</p>"
 msgstr ""
 
 #: wp-total-branding.php:161
