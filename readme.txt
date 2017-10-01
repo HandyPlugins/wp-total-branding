@@ -37,6 +37,10 @@ __Docs__: [handyplugins.co/wptb-docs/](https://handyplugins.co/wptb-docs/)
 = Documentation =
 Our knowledge base is available on [handyplugins.co/wptb-docs/](https://handyplugins.co/wptb-docs/)
 
+= Contributing & Bug Report =
+Bug reports and pull requests are welcome on [Github](https://github.com/mustafauysal/wp-total-branding)
+
+
 == Installation ==
 
 1. Upload the `wp-total-branding` folder to the `/wp-content/plugins/` directory
