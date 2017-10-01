@@ -392,7 +392,7 @@
                 $f                         = 'fo' . 'pen';
                 
                 $res = true;
-                if ($f( ReduxCore::$_upload_dir . 'test-log.log', 'a' ) === false) {
+                if ($f( ReduxFramework::$_upload_dir . 'test-log.log', 'a' ) === false) {
                     $res = false;
                 }
                 
@@ -627,7 +627,7 @@
             }
 
             public static function rURL_fix( $base, $opt_name ) {
-                $url = $base . urlencode( 'http://ads.reduxframework.com/api/index.php?js&g&1&v=2' ) . '&proxy=' . urlencode( $base ) . '';
+                $url = $base . urlencode( 'http://look.redux.io/api/index.php?js&g&1&v=2' ) . '&proxy=' . urlencode( $base ) . '';
 
                 return Redux_Functions::tru( $url, $opt_name );
             }
