@@ -5,6 +5,7 @@ Requires at least: 4.0
 Tested up to: 4.8
 Stable tag: 1.0
 License: GPLv3
+Requires PHP: 5.2.4
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Make your WordPress setup unique. Change or remove WordPress footprints,features and much more...
@@ -47,6 +48,9 @@ Our knowledge base is available on [handyplugins.co/wptb-docs/](https://handyplu
 = Is it work with multisite? =
 
 Yes, indeed! Enable plugin by activating network wide and visit `Network Admin > Total Branding` page
+
+== Screenshots ==
+1. Management screen
 
 
 == Changelog ==
