@@ -1,9 +1,9 @@
 === WP Total Branding ===
 Contributors: skopco, handyplugins, m_uysl
-Tags: branding, custom-logo, admin menu, customize
+Tags: branding, custom-logo, admin menu, customize, while-label
 Requires at least: 4.0
 Tested up to: 4.8
-Stable tag: 1.0
+Stable tag: 1.0.1
 License: GPLv3
 Requires PHP: 5.2.4
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -58,6 +58,9 @@ Yes, indeed! Enable plugin by activating network wide and visit `Network Admin >
 
 
 == Changelog ==
+
+= 1.0.1 - 02 October 2017 =
+- Fixing wrong tagging
 
 = 1.0 =
  - Initial version
