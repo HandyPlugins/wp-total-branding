@@ -1,5 +1,5 @@
 === WP Total Branding ===
-Contributors: handyplugins, m_uysl
+Contributors: skopco, handyplugins, m_uysl
 Tags: branding, custom-logo, admin menu, customize
 Requires at least: 4.0
 Tested up to: 4.8
@@ -38,7 +38,7 @@ __Docs__: [handyplugins.co/wptb-docs/](https://handyplugins.co/wptb-docs/)
 Our knowledge base is available on [handyplugins.co/wptb-docs/](https://handyplugins.co/wptb-docs/)
 
 = Contributing & Bug Report =
-Bug reports and pull requests are welcome on [Github](https://github.com/mustafauysal/wp-total-branding)
+Bug reports and pull requests are welcome on [Github](https://github.com/skopco/wp-total-branding)
 
 
 == Installation ==
