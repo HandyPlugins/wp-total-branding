@@ -7,7 +7,7 @@
  * Author URI:      https://handyplugins.co
  * Text Domain:     wp-total-branding
  * Domain Path:     /languages
- * Version:         1.0.2
+ * Version:         1.0.3
  *
  * @package         WP_Total_Branding
  */
