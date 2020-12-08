@@ -75,7 +75,7 @@ if ( ! class_exists( 'WP_Total_Branding' ) ) :
 			}
 
 			if ( ! defined( 'WPTB_PLUGIN_VERSION' ) ) {
-				define( 'WPTB_PLUGIN_VERSION', '1.0.1' );
+				define( 'WPTB_PLUGIN_VERSION', '1.0.3' );
 			}
 
 			if ( ! defined( 'WPTB_PLUGIN_DIR' ) ) {
