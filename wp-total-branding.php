@@ -1,13 +1,13 @@
 <?php
 /**
  * Plugin Name:     WP Total Branding
- * Plugin URI:      https://handyplugins.co/product/wp-total-branding/
+ * Plugin URI:      https://handyplugins.co/wp-total-branding/
  * Description:     Simple and powerful branding solution for WordPress.
- * Author:          HandyPlugins, Mustafa Uysal
+ * Author:          HandyPlugins
  * Author URI:      https://handyplugins.co
  * Text Domain:     wp-total-branding
  * Domain Path:     /languages
- * Version:         1.0.1
+ * Version:         1.0.2
  *
  * @package         WP_Total_Branding
  */
