@@ -44,9 +44,9 @@
             }
 
             public static function load() {
-                add_action( 'after_setup_theme', array( 'Redux', 'createRedux' ) );
-                add_action( 'init', array( 'Redux', 'createRedux' ) );
-                add_action( 'switch_theme', array( 'Redux', 'createRedux' ) );
+                add_action( 'after_setup_theme', array( 'Redux', 'createRedux' ));
+                add_action( 'init', array( 'Redux', 'createRedux' ));
+                add_action( 'switch_theme', array( 'Redux', 'createRedux' ));
             }
 
             public static function init( $opt_name = "" ) {
@@ -69,6 +69,10 @@
                         if ( ! isset( $ReduxFramework->extensions[ $name ] ) ) {
                             if ( class_exists( $extension['class'] ) ) {
                                 $ReduxFramework->extensions[ $name ] = new $extension['class']( $ReduxFramework );
+                            //if (isset($ReduxFramework->extensions[ $name ]->min_redux_version)) {
+                                //var_dump($ReduxFramework->extensions[ $name ]->min_redux_version);
+                            //}
+                                
                             } else {
                                 echo '<div id="message" class="error"><p>No class named <strong>' . $extension['class'] . '</strong> exists. Please verify your extension path.</p></div>';
                             }
@@ -98,6 +102,7 @@
                 }
 
                 $check = ReduxFrameworkInstances::get_instance( $opt_name );
+
                 if ( isset( $check->apiHasRun ) ) {
                     return;
                 }
@@ -273,6 +278,8 @@
                         $i    = 0;
                         while ( isset( self::$sections[ $opt_name ][ $section['id'] ] ) ) {
                             $section['id'] = $orig . '_' . $i;
+
+                            $i ++;
                         }
                     }
                 }
@@ -545,7 +552,7 @@
                     } else {
                         $folders = scandir( $path, 1 );
                         foreach ( $folders as $folder ) {
-                            if ( $folder === '.' or $folder === '..' ) {
+                            if ( $folder === '.' or $folder === '..' or $folder[0] == "." ) {
                                 continue;
                             }
                             if ( file_exists( $path . $folder . '/extension_' . $folder . '.php' ) ) {
@@ -563,6 +570,21 @@
                         self::checkExtensionClassFile( $opt_name, $name, $path );
                     }
                 }
+            }
+            
+            /**
+             * Method to disables Redux demo mode popup.
+             */
+            public static function disable_demo() {
+                add_action('ReduxFrameworkPlugin_admin_notice', 'Redux::remove_demo', 0);
+                add_action('redux_framework_plugin_admin_notice', 'Redux::remove_demo', 0);
+            }
+
+            /**
+             * Callback used by Redux::disable_demo() to remove the demo mode notice from Redux.
+             */
+            function remove_demo() {
+                update_option('ReduxFrameworkPlugin_ACTIVATED_NOTICES', '');
             }
 
             public static function getAllExtensions() {
