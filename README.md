@@ -3,8 +3,6 @@ WP Total Branding
 
 WP Total Branding is complete branding solution for your WordPress. Check out features below;
 
-__Docs__: [handyplugins.co/wptb-docs/](https://handyplugins.co/wptb-docs/)
-
 ### Features
 
 - Remove or change site generator
@@ -22,11 +20,6 @@ __Docs__: [handyplugins.co/wptb-docs/](https://handyplugins.co/wptb-docs/)
 - Custom CSS for admin dashboard
 - Custom CSS for website
 - Global content: add custom content to header or footer to all websites.
-
-
-## Documentation  
-Our knowledge base is available on [handyplugins.co/wptb-docs/](https://handyplugins.co/wptb-docs/)
-
 
 ## Setup  
 1. Upload the `wp-total-branding` folder to the `/wp-content/plugins/` directory
