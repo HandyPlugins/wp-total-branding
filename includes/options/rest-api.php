@@ -15,7 +15,7 @@ Redux::setSection( $opt_name, array(
 			'id'       => 'rest-api-status',
 			'type'     => 'switch',
 			'title'    => __( 'REST-API status', 'wp-total-branding' ),
-			'subtitle' => __( 'You can control REST-API', 'wp-total-branding' ),
+			'subtitle' => __( 'You can control REST-API. Block Editor uses rest endpoints, so do not disable it if you are using block editor.', 'wp-total-branding' ),
 			'default'  => 1,
 			'off'      => 'Disable',
 			'on'       => 'Enable',
