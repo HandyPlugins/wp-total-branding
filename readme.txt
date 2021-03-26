@@ -14,8 +14,6 @@ Make your WordPress setup unique. Change or remove WordPress footprints,features
 
 WP Total Branding is complete branding solution for your WordPress. Check out features below;
 
-__Docs__: [handyplugins.co/wptb-docs/](https://handyplugins.co/wptb-docs/)
-
 = Features =
 
 - Remove or change site generator
@@ -34,11 +32,8 @@ __Docs__: [handyplugins.co/wptb-docs/](https://handyplugins.co/wptb-docs/)
 - Custom CSS for website
 - Global content: add custom content to header or footer to all websites.
 
-= Documentation =
-Our knowledge base is available on [handyplugins.co/wptb-docs/](https://handyplugins.co/wptb-docs/)
-
 = Contributing & Bug Report =
-Bug reports and pull requests are welcome on [Github](https://github.com/skopco/wp-total-branding)
+Bug reports and pull requests are welcome on [Github](https://github.com/HandyPlugins/wp-total-branding)
 
 
 == Installation ==
