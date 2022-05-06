@@ -10,8 +10,8 @@ class WPTB_Admin {
 
 	function setup() {
 
-		if ( ! class_exists( 'ReduxFramework' ) && file_exists( WPTB_INC_DIR . 'libs/ReduxCore/framework.php' ) ) {
-			require_once( WPTB_INC_DIR . 'libs/ReduxCore/framework.php' );
+		if ( ! class_exists( 'ReduxFramework' ) && file_exists( WPTB_INC_DIR . 'libs/redux-core/framework.php' ) ) {
+			require_once( WPTB_INC_DIR . 'libs/redux-core/framework.php' );
 		}
 		$redux = ReduxFrameworkInstances::get_instance( WPTB_OPTION );
 
