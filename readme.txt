@@ -1,11 +1,11 @@
 === WP Total Branding ===
-Contributors: skopco, handyplugins, m_uysl
+Contributors: handyplugins, m_uysl
 Tags: branding, custom-logo, admin menu, customize, while-label
-Requires at least: 4.0
-Tested up to: 5.7
-Stable tag: 1.0.4
+Requires at least: 5.2
+Tested up to: 6.0
+Stable tag: 1.1
 License: GPLv3
-Requires PHP: 5.2.4
+Requires PHP: 7.1
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Make your WordPress setup unique. Change or remove WordPress footprints,features and much more...
@@ -53,6 +53,12 @@ Yes, indeed! Enable plugin by activating network wide and visit `Network Admin >
 
 
 == Changelog ==
+
+= 1.1 (May 6, 2022) =
+- Tested with WP 6.0
+- Redux framework update (4.x)
+- Update min. requirements (PHP 7.1+, WordPress 5.2+)
+- Minor tweaks
 
 = 1.0.4 (March 26, 2021) =
 - Tested with WP 5.7

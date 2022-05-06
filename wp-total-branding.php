@@ -7,7 +7,7 @@
  * Author URI:      https://handyplugins.co
  * Text Domain:     wp-total-branding
  * Domain Path:     /languages
- * Version:         1.0.4
+ * Version:         1.1
  *
  * @package         WP_Total_Branding
  */
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'WPTB_REQUIRED_WP_VERSION', '4.0' );
+define( 'WPTB_REQUIRED_WP_VERSION', '5.2' );
 
 
 if ( ! class_exists( 'WP_Total_Branding' ) ) :
@@ -75,7 +75,7 @@ if ( ! class_exists( 'WP_Total_Branding' ) ) :
 			}
 
 			if ( ! defined( 'WPTB_PLUGIN_VERSION' ) ) {
-				define( 'WPTB_PLUGIN_VERSION', '1.0.4' );
+				define( 'WPTB_PLUGIN_VERSION', '1.1' );
 			}
 
 			if ( ! defined( 'WPTB_PLUGIN_DIR' ) ) {
