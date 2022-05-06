@@ -12,7 +12,7 @@ class WPTB_Login {
 	function __construct() {
 		add_action( 'login_head', array( $this, 'login_head' ) );
 		add_filter( 'login_headerurl', array( $this, 'header_url' ) );
-		add_filter( 'login_headertitle', array( $this, 'header_title' ) );
+		add_filter( 'login_headertext', array( $this, 'header_title' ) );
 	}
 
 
