@@ -17,6 +17,7 @@ foreach ( (array) $menus as $item ) {
 
 	if ( ! empty( $item[0] ) ) {
 		$menu_options[ $item[2] ] = trim( preg_replace( '#<span[^>]*>(.*)</span>(.*)</span>#isU', "", $item[0] ) );
+		$menu_options[ $item[2] ] = str_replace( '</span>', '', $menu_options[ $item[2] ] );
 	}
 }
 
