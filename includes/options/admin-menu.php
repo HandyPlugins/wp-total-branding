@@ -11,7 +11,7 @@ $menu_options = array();
 foreach ( (array) $menus as $item ) {
 
 	// Link Manager removed in WordPress 3.5
-	if ( 'menu-links' === $item[5] ) {
+	if ( isset( $item[5] ) && 'menu-links' === $item[5] ) {
 		continue;
 	}
 
