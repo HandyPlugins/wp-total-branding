@@ -56,7 +56,7 @@ $args = array(
 	//'open_expanded'     => true,                    // Allow you to start the panel in an expanded way initially.
 	//'disable_save_warn' => true,                    // Disable the save warning when a user changes a field
 	// OPTIONAL -> Give you extra features
-	'page_priority'        => null,
+	'page_priority'        => 100,
 	// Order where the menu appears in the admin area. If there is any conflict, something will not show. Warning.
 	'page_parent'          => '',
 	// For a full list of options, visit: http://codex.wordpress.org/Function_Reference/add_submenu_page#Parameters
@@ -123,7 +123,7 @@ $args = array(
 );
 
 
-Redux::setArgs( $opt_name, $args );
+Redux::set_args( $opt_name, $args );
 
 
 // load options
