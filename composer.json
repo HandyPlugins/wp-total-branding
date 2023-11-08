@@ -1,0 +1,22 @@
+{
+  "name": "handyplugins/wp-total-branding",
+  "description": "Complete branding solution for WordPress.",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "HandyPlugins",
+      "email": "support@handyplugins.co"
+    }
+  ],
+  "require": {
+    "php": ">=7.1"
+  },
+  "require-dev": {
+    "10up/phpcs-composer": "dev-master"
+  },
+  "scripts": {
+    "lint": "phpcs wp-total-branding.php includes/*.php -s",
+    "lint-fix": "phpcbf wp-total-branding.php includes/*.php"
+  }
+}
