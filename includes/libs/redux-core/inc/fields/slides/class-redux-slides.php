@@ -49,7 +49,7 @@ if ( ! class_exists( 'Redux_Slides', false ) ) {
 
 			$x = 0;
 
-			if ( isset( $this->value ) && is_array( $this->value ) && ! empty( $this->value ) ) {
+			if ( is_array( $this->value ) && ! empty( $this->value ) ) {
 				$slides = $this->value;
 
 				foreach ( $slides as $slide ) {
@@ -220,7 +220,7 @@ if ( ! class_exists( 'Redux_Slides', false ) ) {
 					echo '</fieldset>';
 					echo '</div>';
 
-					$x ++;
+					++$x;
 				}
 			}
 
@@ -380,10 +380,10 @@ if ( ! class_exists( 'Redux_Slides', false ) ) {
 			}
 
 			if ( $this->parent->args['dev_mode'] ) {
-				wp_enqueue_style( 'redux-field-media-css' );
+				wp_enqueue_style( 'redux-field-media' );
 
 				wp_enqueue_style(
-					'redux-field-slides-css',
+					'redux-field-slides',
 					Redux_Core::$url . 'inc/fields/slides/redux-slides.css',
 					array(),
 					$this->timestamp
@@ -391,7 +391,7 @@ if ( ! class_exists( 'Redux_Slides', false ) ) {
 			}
 
 			wp_enqueue_script(
-				'redux-field-media-js',
+				'redux-field-media',
 				Redux_Core::$url . 'assets/js/media/media' . Redux_Functions::is_min() . '.js',
 				array( 'jquery', 'redux-js' ),
 				$this->timestamp,
@@ -399,9 +399,9 @@ if ( ! class_exists( 'Redux_Slides', false ) ) {
 			);
 
 			wp_enqueue_script(
-				'redux-field-slides-js',
+				'redux-field-slides',
 				Redux_Core::$url . 'inc/fields/slides/redux-slides' . Redux_Functions::is_min() . '.js',
-				array( 'jquery', 'jquery-ui-core', 'jquery-ui-accordion', 'jquery-ui-sortable', 'redux-field-media-js' ),
+				array( 'jquery', 'jquery-ui-core', 'jquery-ui-accordion', 'jquery-ui-sortable', 'redux-field-media' ),
 				$this->timestamp,
 				true
 			);

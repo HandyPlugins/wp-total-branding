@@ -5,6 +5,7 @@
  * @class Redux_Core
  * @version 4.0.0
  * @package Redux Framework/Classes
+ * @noinspection PhpConditionCheckedByNextConditionInspection
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -20,16 +21,18 @@ if ( ! class_exists( 'Redux_AJAX_Save', false ) ) {
 		 * Redux_AJAX_Save constructor.
 		 * array_merge_recursive_distinct
 		 *
-		 * @param object $parent ReduxFramework object.
+		 * @param object $redux ReduxFramework object.
 		 */
-		public function __construct( $parent ) {
-			parent::__construct( $parent );
+		public function __construct( $redux ) {
+			parent::__construct( $redux );
 
 			add_action( 'wp_ajax_' . $this->args['opt_name'] . '_ajax_save', array( $this, 'save' ) );
 		}
 
 		/**
 		 * AJAX callback to save the option panel values.
+		 *
+		 * @throws ReflectionException Exception.
 		 */
 		public function save() {
 			$redux = null;
@@ -139,8 +142,10 @@ if ( ! class_exists( 'Redux_AJAX_Save', false ) ) {
 					/**
 					 * Action 'redux/options/{opt_name}/compiler'
 					 *
-					 * @param array  options
-					 * @param string CSS that get sent to the compiler hook
+					 * @param array  $options Global options.
+					 * @param string $css CSS that get sent to the compiler hook.
+					 * @param array  $changed_values Changed option values.
+					 * @param array  $output_variables Output variables.
 					 */
 
 					// phpcs:ignore WordPress.NamingConventions.ValidHookName
@@ -149,8 +154,7 @@ if ( ! class_exists( 'Redux_AJAX_Save', false ) ) {
 					/**
 					 * Action 'redux/options/{opt_name}/compiler/advanced'
 					 *
-					 * @param array  options
-					 * @param string CSS that get sent to the compiler hook, which sends the full Redux object
+					 * @param object $redux ReduxFramework object.
 					 */
 
 					// phpcs:ignore WordPress.NamingConventions.ValidHookName

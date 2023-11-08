@@ -35,7 +35,6 @@ if ( ! class_exists( 'Redux_Validation', false ) ) {
 			foreach ( $sections as $k => $section ) {
 				if ( isset( $section['fields'] ) ) {
 					foreach ( $section['fields'] as $fkey => $field ) {
-
 						if ( is_array( $field ) ) {
 							$field['section_id'] = $k;
 						}
@@ -92,7 +91,7 @@ if ( ! class_exists( 'Redux_Validation', false ) ) {
 									// then we need to keep processing.
 									if ( ! $is_not_empty ) {
 
-										// Empty id and not checking for 'not_empty.  Bail out...
+										// Empty id and not checking for 'not_empty'.  Bail out...
 										if ( ! isset( $field['validate_callback'] ) ) {
 											continue;
 										}
@@ -121,15 +120,13 @@ if ( ! class_exists( 'Redux_Validation', false ) ) {
 								$validate = 'Redux_Validation_' . $val;
 
 								if ( ! class_exists( $validate ) ) {
+									$file = str_replace( '_', '-', $val );
 
 									/**
 									 * Filter 'redux/validate/{opt_name}/class/{field.validate}'
 									 *
-									 * @param        string                validation class file path
-									 * @param string $class_file validation class file path
+									 * @param string $validate   validation class file path
 									 */
-
-									$file = str_replace( '_', '-', $val );
 
 									// phpcs:ignore WordPress.NamingConventions.ValidHookName
 									$class_file = apply_filters( "redux/validate/{$core->args['opt_name']}/class/$val", Redux_Core::$dir . "inc/validation/$val/class-redux-validation-$file.php", $validate );
@@ -171,15 +168,15 @@ if ( ! class_exists( 'Redux_Validation', false ) ) {
 												unset( $plugin_options[ $field['id'] ][ $key ] );
 											}
 
-											if ( isset( $validation->error ) ) {
+											if ( ! empty( $validation->error ) ) {
 												$core->errors[] = $validation->error;
 											}
 
-											if ( isset( $validation->warning ) ) {
+											if ( ! empty( $validation->warning ) ) {
 												$core->warnings[] = $validation->warning;
 											}
 
-											if ( isset( $validation->sanitize ) ) {
+											if ( ! empty( $validation->sanitize ) ) {
 												$core->sanitize[] = $validation->sanitize;
 											}
 										}
@@ -197,15 +194,15 @@ if ( ! class_exists( 'Redux_Validation', false ) ) {
 										$validation                     = new $validate( $core, $field, $pofi, $options[ $field['id'] ] );
 										$plugin_options[ $field['id'] ] = $validation->value;
 
-										if ( isset( $validation->error ) ) {
+										if ( ! empty( $validation->error ) ) {
 											$core->errors[] = $validation->error;
 										}
 
-										if ( isset( $validation->warning ) ) {
+										if ( ! empty( $validation->warning ) ) {
 											$core->warnings[] = $validation->warning;
 										}
 
-										if ( isset( $validation->sanitize ) ) {
+										if ( ! empty( $validation->sanitize ) ) {
 											$core->sanitize[] = $validation->sanitize;
 										}
 									}
@@ -222,20 +219,22 @@ if ( ! class_exists( 'Redux_Validation', false ) ) {
 							$plugin_option = $plugin_options[ $field['id'] ] ?? null;
 							$option        = $options[ $field['id'] ] ?? null;
 
-							$callbackvalues = call_user_func( $callback, $field, $plugin_option, $option );
+							if ( null !== $plugin_option ) {
+								$callbackvalues = call_user_func( $callback, $field, $plugin_option, $option );
 
-							$plugin_options[ $field['id'] ] = $callbackvalues['value'];
+								$plugin_options[ $field['id'] ] = $callbackvalues['value'];
 
-							if ( isset( $callbackvalues['error'] ) ) {
-								$core->errors[] = $callbackvalues['error'];
-							}
+								if ( isset( $callbackvalues['error'] ) ) {
+									$core->errors[] = $callbackvalues['error'];
+								}
 
-							if ( isset( $callbackvalues['warning'] ) ) {
-								$core->warnings[] = $callbackvalues['warning'];
-							}
+								if ( isset( $callbackvalues['warning'] ) ) {
+									$core->warnings[] = $callbackvalues['warning'];
+								}
 
-							if ( isset( $callbackvalues['sanitize'] ) ) {
-								$core->sanitize[] = $callbackvalues['sanitize'];
+								if ( isset( $callbackvalues['sanitize'] ) ) {
+									$core->sanitize[] = $callbackvalues['sanitize'];
+								}
 							}
 						}
 					}

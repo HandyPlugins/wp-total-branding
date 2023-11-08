@@ -5,6 +5,7 @@
  * @class   Redux_Extension_Abstract
  * @version 4.0.0
  * @package Redux Framework/Classes
+ * @noinspection PhpUnused
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -68,13 +69,13 @@ abstract class Redux_Extension_Abstract {
 	/**
 	 * Redux_Extension_Abstract constructor.
 	 *
-	 * @param object $parent ReduxFramework pointer.
-	 * @param string $file   Extension file.
+	 * @param object $redux ReduxFramework pointer.
+	 * @param string $file  Extension file.
 	 */
-	public function __construct( $parent, string $file = '' ) {
-		$this->parent = $parent;
+	public function __construct( $redux, string $file = '' ) {
+		$this->parent = $redux;
 
-		// If the file is not given make sure we have one.
+		// If the file is not given, make sure we have one.
 		if ( empty( $file ) ) {
 			$file = $this->get_reflection()->getFileName();
 		}
@@ -153,15 +154,7 @@ abstract class Redux_Extension_Abstract {
 	 */
 	protected function add_overload_field_filter( string $field_name ) {
 		// phpcs:ignore WordPress.NamingConventions.ValidHookName
-		add_filter(
-			'redux/' . $this->parent->args['opt_name'] . '/field/class/' . $field_name,
-			array(
-				&$this,
-				'overload_field_path',
-			),
-			10,
-			2
-		);
+		add_filter( 'redux/' . $this->parent->args['opt_name'] . '/field/class/' . $field_name, array( &$this, 'overload_field_path' ), 10, 2 );
 	}
 
 	/**
@@ -177,6 +170,7 @@ abstract class Redux_Extension_Abstract {
 			'redux/fields',
 			function ( $classes ) use ( $field_name, $class ) {
 				$classes[ $field_name ] = $class;
+
 				return $classes;
 			}
 		);
@@ -185,7 +179,7 @@ abstract class Redux_Extension_Abstract {
 	}
 
 	/**
-	 * Overload field path.
+	 * Overload a field path.
 	 *
 	 * @param string $file  Extension file.
 	 * @param array  $field Field array.
@@ -204,7 +198,7 @@ abstract class Redux_Extension_Abstract {
 	}
 
 	/**
-	 * Sets the minimum version of Redux to use.  Displays a notice if requirements not met.
+	 * Sets the minimum version of Redux to use.  Displays a notice if requirements are not met.
 	 *
 	 * @param string $min_version       Minimum version to evaluate.
 	 * @param string $extension_version Extension version number.

@@ -135,7 +135,7 @@ class Redux_Customizer_Panel extends WP_Customize_Panel {
 			<div class="accordion-section-title" tabindex="0">
 				<span class="preview-notice">
 					<?php /* translators: %s is the site/panel title in the Customizer */ ?>
-					<?php echo sprintf( esc_html__( 'You are customizing', 'redux-framework' ) . ' %s', '<strong class="panel-title">' . esc_html( $this->title ) . '</strong>' ); ?>
+					<?php printf( esc_html__( 'You are customizing', 'redux-framework' ) . ' %s', '<strong class="panel-title">' . esc_html( $this->title ) . '</strong>' ); ?>
 				</span>
 			</div>
 			<?php if ( ! empty( $this->description ) ) { ?>
@@ -194,7 +194,7 @@ class Redux_Customizer_Panel extends WP_Customize_Panel {
 			<div class="accordion-section-title">
 				<span class="preview-notice">
 					<?php /* translators: %s is the site/panel title in the Customizer */ ?>
-					<?php echo sprintf( esc_html__( 'You are customizing', 'redux-framework' ) . ' %s', '<strong class="panel-title">{{ data.title }}</strong>' ); ?>
+					<?php printf( esc_html__( 'You are customizing', 'redux-framework' ) . ' %s', '<strong class="panel-title">{{ data.title }}</strong>' ); ?>
 				</span>
 				<# if ( data.description ) { #>
 				<button
@@ -228,7 +228,7 @@ class Redux_Customizer_Panel extends WP_Customize_Panel {
 			data-width="{{ data.width }}">
 			<h3 class="accordion-section-title" tabindex="0">
 				<# if ( data.icon ) { #><i class="{{ data.icon }}"></i> <# } #>{{ data.title }}
-				<span class="screen-reader-text"><?php echo esc_html__( 'Press return or enter to open this panel', 'redux-pro' ); ?></span>
+				<span class="screen-reader-text"><?php echo esc_html__( 'Press return or enter to open this panel', 'redux-framework' ); ?></span>
 			</h3>
 			<ul class="accordion-sub-container control-panel-content"></ul>
 		</li>

@@ -40,18 +40,18 @@ if ( ! class_exists( 'Redux_Class', false ) ) {
 		/**
 		 * Redux_Class constructor.
 		 *
-		 * @param null|object $parent Pointer to ReduxFramework object.
+		 * @param null|object $redux Pointer to ReduxFramework object.
 		 */
-		public function __construct( $parent = null ) {
-			if ( is_object( $parent ) ) {
-				$this->parent   = $parent;
-				$this->args     = $parent->args;
+		public function __construct( $redux = null ) {
+			if ( is_object( $redux ) ) {
+				$this->parent   = $redux;
+				$this->args     = $redux->args;
 				$this->opt_name = $this->args['opt_name'];
 			}
 		}
 
 		/**
-		 * Pointer to project specific ReduxFramework object.
+		 * Pointer to a project-specific ReduxFramework object.
 		 *
 		 * @return null|object|ReduxFramework
 		 */
@@ -62,7 +62,5 @@ if ( ! class_exists( 'Redux_Class', false ) ) {
 
 			return null;
 		}
-
 	}
-
 }

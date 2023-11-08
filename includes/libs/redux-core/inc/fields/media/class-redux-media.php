@@ -164,12 +164,11 @@ if ( ! class_exists( 'Redux_Media', false ) ) {
 					if ( ! empty( $this->field['default']['url'] ) ) {
 						$this->value['url'] = $this->field['default']['url'];
 					}
-				} else {
-					if ( is_numeric( $this->field['default'] ) ) { // Check if it's an attachment ID.
-						$this->value['id'] = $this->field['default'];
-					} else { // Must be a URL.
-						$this->value['url'] = $this->field['default'];
-					}
+				} elseif ( is_numeric( $this->field['default'] ) ) {
+					// Check if it's an attachment ID.
+					$this->value['id'] = $this->field['default'];
+				} else { // Must be a URL.
+					$this->value['url'] = $this->field['default'];
 				}
 			}
 
@@ -262,6 +261,15 @@ if ( ! class_exists( 'Redux_Media', false ) ) {
 		}
 
 		/**
+		 * Do enqueue for each field instance.
+		 *
+		 * @return void
+		 */
+		public function always_enqueue() {
+			Redux_Image_Filters::enqueue( $this->filters_enabled );
+		}
+
+		/**
 		 * Enqueue Function.
 		 * If this field requires any scripts, or CSS define this function and register/enqueue the scripts/css
 		 *
@@ -276,12 +284,8 @@ if ( ! class_exists( 'Redux_Media', false ) ) {
 				wp_enqueue_script( 'media-upload' );
 			}
 
-			if ( $this->filters_enabled ) {
-				Redux_Image_Filters::enqueue( $this->field, $this->filters_enabled );
-			}
-
 			wp_enqueue_script(
-				'redux-field-media-js',
+				'redux-field-media',
 				Redux_Core::$url . 'assets/js/media/media' . Redux_Functions::is_min() . '.js',
 				array( 'jquery', 'redux-js' ),
 				$this->timestamp,
@@ -289,7 +293,7 @@ if ( ! class_exists( 'Redux_Media', false ) ) {
 			);
 
 			if ( $this->parent->args['dev_mode'] ) {
-				wp_enqueue_style( 'redux-field-media-css' );
+				wp_enqueue_style( 'redux-field-media' );
 			}
 		}
 
@@ -340,7 +344,6 @@ if ( ! class_exists( 'Redux_Media', false ) ) {
 
 			return '';
 		}
-
 	}
 }
 

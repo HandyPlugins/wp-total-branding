@@ -26,13 +26,13 @@ if ( ! class_exists( 'Redux_WordPress_Data', false ) ) {
 		/**
 		 * Redux_WordPress_Data constructor.
 		 *
-		 * @param mixed $parent ReduxFramework pointer or opt_name.
+		 * @param mixed $redux ReduxFramework pointer or opt_name.
 		 */
-		public function __construct( $parent = null ) {
-			if ( is_string( $parent ) ) {
-				$this->opt_name = $parent;
+		public function __construct( $redux = null ) {
+			if ( is_string( $redux ) ) {
+				$this->opt_name = $redux;
 			} else {
-				parent::__construct( $parent );
+				parent::__construct( $redux );
 			}
 		}
 
@@ -165,6 +165,7 @@ if ( ! class_exists( 'Redux_WordPress_Data', false ) ) {
 							$key = $k;
 						}
 					}
+
 					if ( empty( $name_key ) ) {
 						$value = $v;
 					} else {
@@ -249,7 +250,7 @@ if ( ! class_exists( 'Redux_WordPress_Data', false ) ) {
 
 			$secondary_key = 'slug';
 			if ( isset( $args['secondary_key'] ) ) {
-				$display_key = $args['secondary_key'];
+				$secondary_key = $args['secondary_key'];
 				unset( $args['secondary_key'] );
 			}
 
@@ -298,13 +299,8 @@ if ( ! class_exists( 'Redux_WordPress_Data', false ) ) {
 
 				case 'sites':
 				case 'site':
-					// WP > 4.6.
-					if ( function_exists( 'get_sites' ) && class_exists( 'WP_Site_Query' ) ) {
-						$sites = get_sites();
-						// WP < 4.6.
-					} elseif ( function_exists( 'wp_get_sites' ) ) {
-						$sites = wp_get_sites(); // phpcs:ignore WordPress.WP.DeprecatedFunctions
-					}
+					$sites = get_sites();
+
 					if ( isset( $sites ) ) {
 						$results = array();
 						foreach ( $sites as $site ) {
@@ -471,9 +467,10 @@ if ( ! class_exists( 'Redux_WordPress_Data', false ) ) {
 					break;
 
 				case 'callback':
-					if ( ! empty( $args ) ) {
+					if ( ! empty( $args ) && is_string( $args ) && function_exists( $args ) ) {
 						$data = call_user_func( $args, $current_value );
 					}
+
 					break;
 			}
 

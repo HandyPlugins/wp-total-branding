@@ -29,6 +29,77 @@ if ( ! class_exists( 'Redux_Functions_Ex', false ) ) {
 		public static $args;
 
 		/**
+		 * Enqueue Font Awesome.
+		 *
+		 * @return void
+		 */
+		public static function enqueue_font_awesome() {
+			wp_enqueue_style(
+				'font-awesome',
+				Redux_Core::$url . 'assets/font-awesome/css/all' . Redux_Functions::is_min() . '.css',
+				array(),
+				'6.4.0'
+			);
+
+			wp_enqueue_style(
+				'font-awesome-4-shims',
+				Redux_Core::$url . 'assets/font-awesome/css/v4-shims' . Redux_Functions::is_min() . '.css',
+				array(),
+				'6.4.0'
+			);
+		}
+
+		/**
+		 * Enqueue Elusive Font.
+		 *
+		 * @return void
+		 */
+		public static function enqueue_elusive_font() {
+			wp_enqueue_style(
+				'redux-elusive-icon',
+				Redux_Core::$url . 'assets/css/vendor/elusive-icons' . Redux_Functions::is_min() . '.css',
+				array(),
+				'2.0.0'
+			);
+		}
+
+		/**
+		 * Shim to load Extendify for backward compatibility.
+		 *
+		 * @return void
+		 */
+		public static function load_extendify_css() {
+			add_action( 'enqueue_block_editor_assets', array( __CLASS__, 'block_editor_styles' ), 99 );
+			add_action( 'wp_enqueue_scripts', array( __CLASS__, 'frontend_init' ), 10 );
+		}
+
+		/**
+		 * Shim to enqueue Extendify CSS in the block editor.
+		 *
+		 * @return void
+		 */
+		public static function block_editor_styles() {
+			wp_enqueue_style(
+				'redux-editor-styles',
+				Redux_Core::$url . 'assets/css/extendify-utilities.css',
+				array(),
+				Redux_Core::$version
+			);
+		}
+
+		/**
+		 * Scripts to enqueue on the frontend
+		 */
+		public static function frontend_init() {
+			wp_enqueue_style(
+				'redux-extendify-styles',
+				Redux_Core::$url . 'assets/css/extendify-utilities.css',
+				array(),
+				Redux_Core::$version
+			);
+		}
+
+		/**
 		 * Output alpha data tag for Iris alpha color picker, if enabled.
 		 *
 		 * @param array $data Data array.
@@ -56,20 +127,20 @@ if ( ! class_exists( 'Redux_Functions_Ex', false ) ) {
 		/**
 		 * Parses the string into variables without the max_input_vars limitation.
 		 *
-		 * @param string $string String of data.
+		 * @param string $str String of data.
 		 *
 		 * @return  array|false $result
 		 * @since   3.5.7.11
 		 * @author  harunbasic
 		 * @access  private
 		 */
-		public static function parse_str( string $string ) {
-			if ( '' === $string ) {
+		public static function parse_str( string $str ) {
+			if ( '' === $str ) {
 				return false;
 			}
 
 			$result = array();
-			$pairs  = explode( '&', $string );
+			$pairs  = explode( '&', $str );
 
 			foreach ( $pairs as $pair ) {
 				// use the original parse_str() on each element.
@@ -200,7 +271,7 @@ if ( ! class_exists( 'Redux_Functions_Ex', false ) ) {
 			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
 			$protocol = ! empty( $_SERVER['HTTPS'] ) && 'off' !== $_SERVER['HTTPS'] || ( ! empty( $_SERVER['SERVER_PORT'] ) && 443 === $_SERVER['SERVER_PORT'] ) ? 'https://' : 'http://';
 
-			if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && ! empty( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+			if ( ! empty( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
 				$new_protocol = sanitize_text_field( wp_unslash( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) ) . '://'; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
 				if ( 'http://' === $protocol && $new_protocol !== $protocol && false === strpos( $url, $new_protocol ) ) {
 					$url = str_replace( $protocol, $new_protocol, $url );
@@ -249,7 +320,7 @@ if ( ! class_exists( 'Redux_Functions_Ex', false ) ) {
 		}
 
 		/**
-		 * Is Redux embedded inside a plugin.
+		 * Is Redux embedded inside a plugin?
 		 *
 		 * @param string $file File to check.
 		 *
@@ -280,7 +351,7 @@ if ( ! class_exists( 'Redux_Functions_Ex', false ) ) {
 		}
 
 		/**
-		 * Is Redux embedded in a theme.
+		 * Is Redux embedded in a theme?
 		 *
 		 * @param string $file File to check.
 		 *
@@ -353,7 +424,7 @@ if ( ! class_exists( 'Redux_Functions_Ex', false ) ) {
 		/**
 		 * Used to fix 3.x and 4 compatibility for extensions
 		 *
-		 * @param object $parent         The extension parent object.
+		 * @param object $extension      The extension parent object.
 		 * @param string $path           - Path of the file.
 		 * @param string $ext_class      - Extension class name.
 		 * @param string $new_class_name - New dynamic class name.
@@ -361,7 +432,7 @@ if ( ! class_exists( 'Redux_Functions_Ex', false ) ) {
 		 *
 		 * @return object - Extended field class.
 		 */
-		public static function extension_compatibility( $parent, string $path, string $ext_class, string $new_class_name, string $name ) {
+		public static function extension_compatibility( $extension, string $path, string $ext_class, string $new_class_name, string $name ) {
 			if ( empty( $new_class_name ) ) {
 				return null;
 			}
@@ -370,31 +441,32 @@ if ( ! class_exists( 'Redux_Functions_Ex', false ) ) {
 
 			if ( ! file_exists( $upload_dir . $ext_class . '.php' ) ) {
 				if ( ! is_dir( $upload_dir ) ) {
-					$parent->filesystem->mkdir( $upload_dir );
-					$parent->filesystem->put_contents( $upload_dir . 'index.php', '<?php // Silence is golden.' );
+					$extension->filesystem->mkdir( $upload_dir );
+					$extension->filesystem->put_contents( $upload_dir . 'index.php', '<?php // Silence is golden.' );
 				}
 				if ( ! class_exists( $ext_class ) ) {
 					require_once $path;
 				}
 				if ( ! file_exists( $upload_dir . $new_class_name . '.php' ) ) {
 					$class_file = '<?php' . PHP_EOL . PHP_EOL .
-					              'class {{ext_class}} extends Redux_Extension_Abstract {' . PHP_EOL .
-					              '    private $c;' . PHP_EOL .
-					              '    public function __construct( $parent, $path, $ext_class ) {' . PHP_EOL .
-					              '        $this->c = $parent->extensions[\'' . $name . '\'];' . PHP_EOL .
-					              '        // Add all the params of the Abstract to this instance.' . PHP_EOL .
-					              '        foreach( get_object_vars( $this->c ) as $key => $value ) {' . PHP_EOL .
-					              '            $this->$key = $value;' . PHP_EOL .
-					              '        }' . PHP_EOL .
-					              '        parent::__construct( $parent, $path );' . PHP_EOL .
-					              '    }' . PHP_EOL .
-					              '    // fake "extends Redux_Extension_Abstract\" using magic function' . PHP_EOL .
-					              '    public function __call( $method, $args ) {' . PHP_EOL .
-					              '        return call_user_func_array( array( $this->c, $method ), $args );' . PHP_EOL .
-					              '    }' . PHP_EOL .
-					              '}' . PHP_EOL;
+								'class {{ext_class}} extends Redux_Extension_Abstract {' . PHP_EOL .
+								'    private $c;' . PHP_EOL .
+								'    public function __construct( $parent, $path, $ext_class ) {' . PHP_EOL .
+								'        $this->c = $parent->extensions[\'' . $name . '\'];' . PHP_EOL .
+								'        // Add all the params of the Abstract to this instance.' . PHP_EOL .
+								'        foreach( get_object_vars( $this->c ) as $key => $value ) {' . PHP_EOL .
+								'            $this->$key = $value;' . PHP_EOL .
+								'        }' . PHP_EOL .
+								'        parent::__construct( $parent, $path );' . PHP_EOL .
+								'    }' . PHP_EOL .
+								'    // fake "extends Redux_Extension_Abstract\" using magic function' . PHP_EOL .
+								'    public function __call( $method, $args ) {' . PHP_EOL .
+								'        return call_user_func_array( array( $this->c, $method ), $args );' . PHP_EOL .
+								'    }' . PHP_EOL .
+								'}' . PHP_EOL;
 					$template   = str_replace( '{{ext_class}}', $new_class_name, $class_file );
-					$parent->filesystem->put_contents( $upload_dir . $new_class_name . '.php', $template );
+					// phpcs:ignore Squiz.PHP.CommentedOutCode.Found
+					// $parent->filesystem->put_contents( $upload_dir . $new_class_name . '.php', $template );
 				}
 
 				if ( file_exists( $upload_dir . $new_class_name . '.php' ) ) {
@@ -402,7 +474,7 @@ if ( ! class_exists( 'Redux_Functions_Ex', false ) ) {
 						require_once $upload_dir . $new_class_name . '.php';
 					}
 					if ( class_exists( $new_class_name ) ) {
-						return new $new_class_name( $parent, $path, $ext_class );
+						return new $new_class_name( $extension, $path, $ext_class );
 					}
 				}
 			}
@@ -436,44 +508,10 @@ if ( ! class_exists( 'Redux_Functions_Ex', false ) ) {
 		 * AJAX callback key
 		 */
 		public static function hash_key(): string {
-			$key = defined( 'AUTH_KEY' ) ? AUTH_KEY : get_site_url();
+			$key  = defined( 'AUTH_KEY' ) ? AUTH_KEY : get_site_url();
 			$key .= defined( 'SECURE_AUTH_KEY' ) ? SECURE_AUTH_KEY : '';
 
 			return $key;
-		}
-
-		/**
-		 * Check if Redux is activated.
-		 *
-		 * @access public
-		 * @since  4.0.0
-		 */
-		public static function activated(): bool {
-			if ( Redux_Core::$insights->tracking_allowed() ) {
-				return true;
-			}
-
-			return false;
-		}
-
-		/**
-		 * Set Redux to activate.
-		 *
-		 * @access public
-		 * @since  4.0.0
-		 */
-		public static function set_activated() {
-			Redux_Core::$insights->optin();
-		}
-
-		/**
-		 * Set Redux to deactivate.
-		 *
-		 * @access public
-		 * @since  4.0.0
-		 */
-		public static function set_deactivated() {
-			Redux_Core::$insights->optout();
 		}
 
 		/**
@@ -526,91 +564,6 @@ if ( ! class_exists( 'Redux_Functions_Ex', false ) ) {
 			}
 
 			return substr( $haystack, - $length ) === $needle;
-		}
-
-		/**
-		 * Get the url where the Admin Columns website is hosted
-		 *
-		 * @param string $path Path to add to url.
-		 *
-		 * @return string
-		 */
-		private static function get_site_url( string $path = '' ): string {
-			$url = 'https://redux.io';
-
-			if ( ! empty( $path ) ) {
-				$url .= '/' . trim( $path, '/' ) . '/';
-			}
-
-			return $url;
-		}
-
-		/**
-		 * Url with utm tags
-		 *
-		 * @param string      $path         Path on site.
-		 * @param string      $utm_medium   Medium var.
-		 * @param string|null $utm_content  Content var.
-		 * @param bool        $utm_campaign Campaign var.
-		 *
-		 * @return string
-		 */
-		public static function get_site_utm_url( string $path, string $utm_medium, string $utm_content = null, bool $utm_campaign = false ): string {
-			$url = self::get_site_url( $path );
-
-			if ( ! $utm_campaign ) {
-				$utm_campaign = 'plugin-installation';
-			}
-
-			$args = array(
-				// Referrer: plugin.
-				'utm_source'   => 'plugin-installation',
-
-				// Specific promotions or sales.
-				'utm_campaign' => $utm_campaign,
-
-				// Marketing medium: banner, documentation or email.
-				'utm_medium'   => $utm_medium,
-
-				// Used for differentiation of medium.
-				'utm_content'  => $utm_content,
-			);
-
-			$args = array_map( 'sanitize_key', array_filter( $args ) );
-
-			return add_query_arg( $args, $url );
-		}
-
-		/**
-		 * Conversion.
-		 */
-		public static function pro_to_ext() {
-
-			// If they are a pro user, convert their key to use with Extendify.
-			$redux_pro_key = get_option( 'redux_pro_license_key' );
-
-			if ( $redux_pro_key && ! get_user_option( 'extendifysdk_redux_key_moved' ) ) {
-				try {
-					$extendify_user_state = get_user_meta( get_current_user_id(), 'extendifysdk_user_data' );
-					if ( false === $extendify_user_state ) {
-						$extendify_user_state = array();
-					}
-
-					if ( ! isset( $extendify_user_state[0] ) ) {
-						$extendify_user_state[0] = wp_json_encode( array() ); // '{}';
-					}
-
-					$extendify_user_data                    = json_decode( $extendify_user_state[0], true );
-					$extendify_user_data['state']['apiKey'] = $redux_pro_key;
-
-					update_user_meta( get_current_user_id(), 'extendifysdk_user_data', wp_json_encode( $extendify_user_data ) );
-				} catch ( Exception $e ) {
-					// Just have it fail gracefully.
-				}
-				// Run this regardless. If the try/catch failed, better not to keep trying as something else is wrong.
-				// In that case we can expect them to come to support, and we can give them a fresh key.
-				update_user_option( get_current_user_id(), 'extendifysdk_redux_key_moved', true );
-			}
 		}
 
 		/**

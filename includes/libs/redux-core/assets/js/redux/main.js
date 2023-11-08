@@ -9,6 +9,7 @@
 		function() {
 			var opt_name;
 			var tempArr = [];
+			var container;
 
 			$.fn.isOnScreen = function() {
 				var win;
@@ -42,7 +43,9 @@
 				$( '.wp-full-overlay-sidebar' ).addClass( 'redux-container' );
 			}
 
-			$( '.redux-container' ).each(
+			container = $( '.redux-container' );
+
+			container.each(
 				function() {
 					opt_name = $.redux.getOptName( this );
 
@@ -54,7 +57,7 @@
 				}
 			);
 
-			$( '.redux-container' ).on(
+			container.on(
 				'click',
 				function() {
 					opt_name = $.redux.getOptName( this );
@@ -124,7 +127,7 @@
 	};
 
 	$.redux.disableFields = function() {
-		$( 'label[for="redux_disable_field"]' ).each(
+		$( 'tr.redux_disable_field' ).each(
 			function() {
 				$( this ).parents( 'tr' ).find( 'fieldset:first' ).find( 'input, select, textarea' ).attr( 'name', '' );
 			}
@@ -132,18 +135,15 @@
 	};
 
 	$.redux.hideFields = function() {
-		$( 'label[for="redux_hide_field"]' ).each(
+		$( 'tr.redux_hide_field' ).each(
 			function() {
-				var tr = $( this ).parent().parent();
-
-				$( tr ).addClass( 'hidden' );
+				$( this ).addClass( 'hidden' );
 			}
 		);
 	};
 
 	$.redux.getOptName = function( el ) {
 		var metabox;
-		var li;
 		var optName;
 		var item = $( el );
 
@@ -153,7 +153,7 @@
 			optName = $( el ).parents( '.redux-wrap-div' ).data( 'opt-name' );
 		}
 
-		// Compatibility for metaboxes
+		// Compatibility for metaboxes.
 		if ( undefined === optName ) {
 			metabox = $( el ).parents( '.postbox' );
 			if ( 0 === metabox.length ) {

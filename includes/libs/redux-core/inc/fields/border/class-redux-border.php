@@ -21,7 +21,7 @@ if ( ! class_exists( 'Redux_Border', false ) ) {
 		 * Set field and value defaults.
 		 */
 		public function set_defaults() {
-			// No errors please.
+			// No errors, please.
 			$defaults = array(
 				'top'    => true,
 				'bottom' => true,
@@ -216,6 +216,20 @@ if ( ! class_exists( 'Redux_Border', false ) ) {
 			}
 		}
 
+
+		/**
+		 * Do enqueue for each field instance.
+		 *
+		 * @return void
+		 */
+		public function always_enqueue() {
+			if ( isset( $this->field['color_alpha'] ) && $this->field['color_alpha'] ) {
+				if ( ! wp_script_is( 'redux-wp-color-picker-alpha' ) ) {
+					wp_enqueue_script( 'redux-wp-color-picker-alpha' );
+				}
+			}
+		}
+
 		/**
 		 * Enqueue Function.
 		 * If this field requires any scripts, or css define this function and register/enqueue the scripts/css
@@ -236,26 +250,20 @@ if ( ! class_exists( 'Redux_Border', false ) ) {
 			$dep_array = array( 'jquery', 'select2-js', 'wp-color-picker', 'redux-js' );
 
 			wp_enqueue_script(
-				'redux-field-border-js',
+				'redux-field-border',
 				Redux_Core::$url . 'inc/fields/border/redux-border' . $min . '.js',
 				$dep_array,
 				$this->timestamp,
 				true
 			);
 
-			if ( isset( $this->field['color_alpha'] ) && $this->field['color_alpha'] ) {
-				if ( ! wp_script_is( 'redux-wp-color-picker-alpha-js' ) ) {
-					wp_enqueue_script( 'redux-wp-color-picker-alpha-js' );
-				}
-			}
-
 			if ( $this->parent->args['dev_mode'] ) {
-				if ( ! wp_style_is( 'redux-color-picker-css' ) ) {
-					wp_enqueue_style( 'redux-color-picker-css' );
+				if ( ! wp_style_is( 'redux-color-picker' ) ) {
+					wp_enqueue_style( 'redux-color-picker' );
 				}
 
 				wp_enqueue_style(
-					'redux-field-border-css',
+					'redux-field-border',
 					Redux_Core::$url . 'inc/fields/border/redux-border.css',
 					array(),
 					$this->timestamp
@@ -339,10 +347,8 @@ if ( ! class_exists( 'Redux_Border', false ) ) {
 						$style .= 'border-' . $key . ':' . $value . ' ' . $clean_value['style'] . ' ' . $clean_value['color'] . ';';
 					}
 				}
-			} else {
-				if ( ! empty( $clean_value['top'] ) ) {
-					$style .= 'border:' . $clean_value['top'] . ' ' . $clean_value['style'] . ' ' . $clean_value['color'] . ';';
-				}
+			} elseif ( ! empty( $clean_value['top'] ) ) {
+				$style .= 'border:' . $clean_value['top'] . ' ' . $clean_value['style'] . ' ' . $clean_value['color'] . ';';
 			}
 
 			return $style;

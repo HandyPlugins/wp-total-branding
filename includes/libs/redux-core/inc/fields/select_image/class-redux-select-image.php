@@ -109,7 +109,7 @@ if ( ! class_exists( 'Redux_Select_Image', false ) ) {
 					echo '<option value="' . esc_url( $v['img'] ) . '" ' . esc_html( $selected ) . '>' . esc_attr( $v['alt'] ) . '</option>';
 
 					// Add a bean.
-					$x ++;
+					++$x;
 				}
 
 				// Close the <select> tag.
@@ -156,7 +156,7 @@ if ( ! class_exists( 'Redux_Select_Image', false ) ) {
 			wp_enqueue_style( 'select2-css' );
 
 			wp_enqueue_script(
-				'redux-field-select-image-js',
+				'redux-field-select-image',
 				Redux_Core::$url . 'inc/fields/select_image/redux-select-image' . Redux_Functions::is_min() . '.js',
 				array( 'jquery', 'select2-js', 'redux-js' ),
 				$this->timestamp,
@@ -165,7 +165,7 @@ if ( ! class_exists( 'Redux_Select_Image', false ) ) {
 
 			if ( $this->parent->args['dev_mode'] ) {
 				wp_enqueue_style(
-					'redux-field-select-image-css',
+					'redux-field-select-image',
 					Redux_Core::$url . 'inc/fields/select_image/redux-select-image.css',
 					array(),
 					$this->timestamp

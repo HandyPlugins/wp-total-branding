@@ -256,12 +256,11 @@ if ( ! class_exists( 'Redux_Background', false ) ) {
 						} elseif ( ! empty( $this->field['default']['background-image'] ) ) {
 							$this->value['background-image'] = $this->field['default']['background-image'];
 						}
-					} else {
-						if ( is_numeric( $this->field['default'] ) ) { // Check if it's an attachment ID.
+					} elseif ( is_numeric( $this->field['default'] ) ) {
+						// Check if it's an attachment ID.
 							$this->value['media']['id'] = $this->field['default'];
-						} else { // Must be a URL.
-							$this->value['background-image'] = $this->field['default'];
-						}
+					} else { // Must be a URL.
+						$this->value['background-image'] = $this->field['default'];
 					}
 				}
 
@@ -367,10 +366,8 @@ if ( ! class_exists( 'Redux_Background', false ) ) {
 		public function enqueue() {
 			if ( function_exists( 'wp_enqueue_media' ) ) {
 				wp_enqueue_media();
-			} else {
-				if ( ! wp_script_is( 'media-upload' ) ) {
-					wp_enqueue_script( 'media-upload' );
-				}
+			} elseif ( ! wp_script_is( 'media-upload' ) ) {
+				wp_enqueue_script( 'media-upload' );
 			}
 
 			if ( ! wp_style_is( 'select2-css' ) ) {
@@ -384,7 +381,7 @@ if ( ! class_exists( 'Redux_Background', false ) ) {
 			$dep_array = array( 'jquery', 'wp-color-picker', 'select2-js', 'redux-js' );
 
 			wp_enqueue_script(
-				'redux-field-background-js',
+				'redux-field-background',
 				Redux_Core::$url . 'inc/fields/background/redux-background' . Redux_Functions::is_min() . '.js',
 				$dep_array,
 				$this->timestamp,
@@ -393,13 +390,13 @@ if ( ! class_exists( 'Redux_Background', false ) ) {
 
 			if ( $this->parent->args['dev_mode'] ) {
 				wp_enqueue_style(
-					'redux-field-background-css',
+					'redux-field-background',
 					Redux_Core::$url . 'inc/fields/background/redux-background.css',
 					array(),
 					$this->timestamp
 				);
 
-				wp_enqueue_style( 'redux-color-picker-css' );
+				wp_enqueue_style( 'redux-color-picker' );
 			}
 		}
 

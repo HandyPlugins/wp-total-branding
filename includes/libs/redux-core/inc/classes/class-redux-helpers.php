@@ -3,6 +3,7 @@
  * Redux Helper Class
  *
  * @noinspection PhpUndefinedFieldInspection
+ * @noinspection PhpUnused
  *
  * @class   Redux_Helpers
  * @version 3.0.0
@@ -30,7 +31,7 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 		public static $array_units = array( '', '%', 'in', 'cm', 'mm', 'em', 'rem', 'ex', 'pt', 'pc', 'px', 'vh', 'vw', 'vmin', 'vmax', 'ch' );
 
 		/**
-		 * Retrieve section array from field ID.
+		 * Retrieve the section array from field ID.
 		 *
 		 * @param string $opt_name Panel opt_name.
 		 * @param string $field_id Field ID.
@@ -44,7 +45,7 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 
 					if ( is_array( $sections ) && ! empty( $sections ) ) {
 						foreach ( $sections as $section ) {
-							if ( isset( $section['fields'] ) && ! empty( $section['fields'] ) ) {
+							if ( ! empty( $section['fields'] ) ) {
 								foreach ( $section['fields'] as $field ) {
 									if ( is_array( $field ) && ! empty( $field ) ) {
 										if ( isset( $field['id'] ) && $field['id'] === $field_id ) {
@@ -73,39 +74,39 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 				return false;
 			}
 
-			return is_float( $val ) ? false : preg_match( '~^((?:\+|-)?[0-9]+)$~', $val );
+			return is_float( $val ) ? false : preg_match( '~^([+\-]?[0-9]+)$~', $val );
 		}
 
 		/**
-		 * Deprecated. Gets panel tab number from specified field.
+		 * Deprecated. Gets panel tab number from the specified field.
 		 *
-		 * @param object       $parent ReduxFramework object.
+		 * @param object       $redux ReduxFramework object.
 		 * @param array|string $field  Field array.
 		 *
 		 * @return int|string
 		 * @deprecated No longer using camelCase naming convention.
 		 */
-		public static function tabFromField( $parent, $field ) { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName
+		public static function tabFromField( $redux, $field ) { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName
 			_deprecated_function( __CLASS__ . '::' . __FUNCTION__, 'Redux 4.0', 'Redux_Helpers::tab_from_field( $parent, $field )' );
 
-			return self::tab_from_field( $parent, $field );
+			return self::tab_from_field( $redux, $field );
 		}
 
 		/**
-		 * Gets panel tab number from specified field.
+		 * Gets panel tab number from the specified field.
 		 *
-		 * @param object       $parent ReduxFramework object.
+		 * @param object       $redux ReduxFramework object.
 		 * @param array|string $field  Field array.
 		 *
 		 * @return int|string
 		 */
-		public static function tab_from_field( $parent, $field ) {
-			foreach ( $parent->sections as $k => $section ) {
+		public static function tab_from_field( $redux, $field ) {
+			foreach ( $redux->sections as $k => $section ) {
 				if ( ! isset( $section['title'] ) ) {
 					continue;
 				}
 
-				if ( isset( $section['fields'] ) && ! empty( $section['fields'] ) ) {
+				if ( ! empty( $section['fields'] ) ) {
 					if ( self::recursive_array_search( $field, $section['fields'] ) ) {
 						return $k;
 					}
@@ -116,7 +117,7 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 		}
 
 		/**
-		 * Deprecated. Verifies if specified field type is in use.
+		 * Deprecated. Verifies if a specified field type is in use.
 		 *
 		 * @param array $fields Field arrays.
 		 * @param array $field  Field array.
@@ -131,7 +132,7 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 		}
 
 		/**
-		 * Verifies if specified field type is in use.
+		 * Verifies if a specified field type is in use.
 		 *
 		 * @param array $fields Field arrays.
 		 * @param array $field  Field arrays to check.
@@ -151,37 +152,37 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 		/**
 		 * Deprecated Verifies if field is in use.
 		 *
-		 * @param object $parent ReduxFramework object.
+		 * @param object $redux ReduxFramework object.
 		 * @param string $field  Field type.
 		 *
 		 * @return bool
 		 * @deprecated No longer using camelCase function names.
 		 */
-		public static function isFieldInUse( $parent, string $field ): bool { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName
-			// phpcs:ignore Squiz.PHP.CommentedOutCode
-			// _deprecated_function( __CLASS__ . '::' . __FUNCTION__, 'Redux 4.0', 'Redux_Helpers::is_field_in_use( $parent, $field )' );
-			return self::is_field_in_use( $parent, $field );
+		public static function isFieldInUse( $redux, string $field ): bool { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName
+			_deprecated_function( __CLASS__ . '::' . __FUNCTION__, 'Redux 4.0', 'Redux_Helpers::is_field_in_use( $parent, $field )' );
+
+			return self::is_field_in_use( $redux, $field );
 		}
 
 		/**
 		 * Verifies if field is in use.
 		 *
-		 * @param object $parent ReduxFramework object.
+		 * @param object $redux ReduxFramework object.
 		 * @param string $field  Field type.
 		 *
 		 * @return bool
 		 */
-		public static function is_field_in_use( $parent, string $field ): bool {
-			if ( empty( $parent->sections ) ) {
+		public static function is_field_in_use( $redux, string $field ): bool {
+			if ( empty( $redux->sections ) ) {
 				return false;
 			}
 
-			foreach ( $parent->sections as $section ) {
+			foreach ( $redux->sections as $section ) {
 				if ( ! isset( $section['title'] ) ) {
 					continue;
 				}
 
-				if ( isset( $section['fields'] ) && ! empty( $section['fields'] ) ) {
+				if ( ! empty( $section['fields'] ) ) {
 					if ( self::recursive_array_search( $field, $section['fields'] ) ) {
 						return true;
 					}
@@ -294,251 +295,6 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 		}
 
 		/**
-		 * Deprecated. Return tracking object.
-		 *
-		 * @return array::get_statistics_object()
-		 * @deprecated No longer using camelCase naming convention.
-		 */
-		public static function getTrackingObject(): array { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName
-			// phpcs:ignore: Squiz.PHP.CommentedOutCode
-			/* _deprecated_function( __CLASS__ . '::' . __FUNCTION__, 'Redux 4.0.0', 'Redux_Instances::get_statistics_object()' ); */
-
-			return self::get_statistics_object();
-		}
-
-		/**
-		 * Deprecated. Return tracking object.
-		 *
-		 * @return array::get_statistics_object()
-		 * @deprecated No longer using camelCase naming convention.
-		 */
-		public static function trackingObject(): array { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName
-			// phpcs:ignore Squiz.PHP.CommentedOutCode
-			/* _deprecated_function( __CLASS__ . '::' . __FUNCTION__, 'Redux 4.0.0', 'Redux_Instances::get_statistics_object()' ); */
-
-			return self::get_statistics_object();
-		}
-
-		/**
-		 * Return tracking object.
-		 *
-		 * @return array
-		 */
-		public static function get_statistics_object(): array {
-			$hash = self::get_hash();
-
-			global $blog_id, $wpdb;
-			$pts = array();
-
-			foreach ( get_post_types( array( 'public' => true ) ) as $pt ) {
-				$count      = wp_count_posts( $pt );
-				$pts[ $pt ] = $count->publish;
-			}
-
-			$comments_count = wp_count_comments();
-
-			if ( ! function_exists( 'get_plugin_data' ) ) {
-				if ( file_exists( ABSPATH . 'wp-admin/includes/plugin.php' ) ) {
-					require_once ABSPATH . 'wp-admin/includes/plugin.php';
-				}
-				if ( file_exists( ABSPATH . 'wp-admin/includes/admin.php' ) ) {
-					require_once ABSPATH . 'wp-admin/includes/admin.php';
-				}
-			}
-
-			$plugins = array();
-
-			foreach ( get_option( 'active_plugins', array() ) as $plugin_path ) {
-				if ( file_exists( WP_PLUGIN_DIR . '/' . $plugin_path ) ) {
-					$plugin_info = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin_path );
-					$slug        = str_replace( '/' . basename( $plugin_path ), '', $plugin_path );
-
-					$plugins[ $slug ] = array(
-						'version'    => $plugin_info['Version'],
-						'name'       => $plugin_info['Name'],
-						'plugin_uri' => $plugin_info['PluginURI'],
-						'author'     => $plugin_info['AuthorName'],
-						'author_uri' => $plugin_info['AuthorURI'],
-					);
-				}
-			}
-
-			if ( is_multisite() ) {
-				foreach ( get_option( 'active_sitewide_plugins', array() ) as $plugin_path ) {
-					if ( file_exists( WP_PLUGIN_DIR . '/' . $plugin_path ) ) {
-						$plugin_info      = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin_path );
-						$slug             = str_replace( '/' . basename( $plugin_path ), '', $plugin_path );
-						$plugins[ $slug ] = array(
-							'version'    => $plugin_info['Version'],
-							'name'       => $plugin_info['Name'],
-							'plugin_uri' => $plugin_info['PluginURI'],
-							'author'     => $plugin_info['AuthorName'],
-							'author_uri' => $plugin_info['AuthorURI'],
-						);
-					}
-				}
-			}
-
-			$user_query = new WP_User_Query(
-				array(
-					'blog_id'     => $blog_id,
-					'count_total' => true,
-				)
-			);
-
-			$comments_query = new WP_Comment_Query();
-
-			$demo_mode = get_option( 'ReduxFrameworkPlugin', false );
-			if ( ! empty( $demo_mode ) ) {
-				$demo_mode = true;
-			}
-
-			$data = array(
-				'hash'            => $hash,
-				'wp_version'      => get_bloginfo( 'version' ),
-				'multisite'       => is_multisite(),
-				'users'           => $user_query->get_total(),
-				'lang'            => get_locale(),
-				'wp_debug'        => ( defined( 'WP_DEBUG' ) && WP_DEBUG ),
-				'memory'          => WP_MEMORY_LIMIT,
-				'localhost'       => self::is_local_host(),
-				'php'             => PHP_VERSION,
-				'posts'           => $pts,
-				'comments'        => array(
-					'total'    => $comments_count->total_comments,
-					'approved' => $comments_count->approved,
-					'spam'     => $comments_count->spam,
-					'pings'    => $comments_query->query(
-						array(
-							'count' => true,
-							'type'  => 'pingback',
-						)
-					),
-				),
-
-				// phpcs:ignore WordPress.NamingConventions.ValidHookName
-				'options'         => apply_filters( 'redux/tracking/options', array() ), // TODO - What is this?!
-
-				'redux_installed' => Redux_Core::$installed,
-				'redux_version'   => Redux_Core::$version,
-				'redux_demo_mode' => $demo_mode,
-				'redux_plugin'    => Redux_Core::$as_plugin,
-				'developer'       => self::get_developer_keys(),
-				'plugins'         => $plugins,
-			);
-
-			$theme_data = wp_get_theme();
-
-			$theme = array(
-				'theme_version'    => $theme_data->get( 'Version' ),
-				'theme_name'       => $theme_data->get( 'Name' ),
-				'theme_author'     => $theme_data->get( 'Author' ),
-				'theme_author_uri' => $theme_data->get( 'AuthorURI' ),
-				'theme_uri'        => $theme_data->get( 'ThemeURI' ),
-				'theme_template'   => $theme_data->get( 'Template' ),
-			);
-
-			if ( is_child_theme() ) {
-				$parent_theme = wp_get_theme( $theme_data->Template ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName
-
-				$theme['theme_is_child']          = true;
-				$theme['theme_parent']            = $theme_data->Template;  // phpcs:ignore WordPress.NamingConventions.ValidVariableName,
-				$theme['theme_parent_name']       = $parent_theme->get( 'Name' );
-				$theme['theme_parent_version']    = $parent_theme->get( 'Version' );
-				$theme['theme_parent_author']     = $parent_theme->get( 'Author' );
-				$theme['theme_parent_author_uri'] = $parent_theme->get( 'AuthorURI' );
-				$theme['theme_parent_uri']        = $parent_theme->get( 'ThemeURI' );
-			}
-
-			$data  = wp_parse_args( $data, $theme );
-			$parts = explode( ' ', Redux_Core::$server['SERVER_SOFTWARE'] );
-
-			foreach ( $parts as $part ) {
-				if ( '(' === $part[0] ) {
-					continue;
-				}
-
-				if ( false !== strpos( $part, '/' ) ) {
-					$chunk = explode( '/', $part );
-				}
-			}
-
-			$data['server']     = Redux_Core::$server['SERVER_SOFTWARE'];
-			$data['db_version'] = $wpdb->db_version();
-
-			$data['callers'] = self::process_redux_callers( true );
-
-			if ( empty( $data['developer'] ) ) {
-				unset( $data['developer'] );
-			} else { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement
-				// phpcs:disable Squiz.PHP.CommentedOutCode
-
-				/*
-				 * print_r($data['developer']);
-				 * echo "NO";
-				 */
-				// phpcs:enable Squiz.PHP.CommentedOutCode
-			}
-
-			ksort( $data );
-
-			$data['extensions'] = self::get_extensions();
-
-			return $data;
-		}
-
-		/**
-		 * Get extensions.
-		 *
-		 * @param string $opt_name Panel opt_name.
-		 *
-		 * @return array
-		 */
-		public static function get_extensions( string $opt_name = '' ): array {
-			if ( empty( $opt_name ) ) {
-				$instances = Redux_Instances::get_all_instances();
-			} else {
-				$instances = array(
-					Redux_Instances::get_instance( $opt_name ),
-				);
-			}
-
-			$extensions = array();
-
-			if ( ! empty( $instances ) ) {
-				foreach ( $instances as $instance ) {
-					if ( isset( $instance->extensions ) && is_array( $instance->extensions ) && ! empty( $instance->extensions ) ) {
-						foreach ( $instance->extensions as $key => $extension ) {
-							if ( in_array(
-								$key,
-								array(
-									'import_export',
-									'customizer',
-									'options_object',
-								),
-								true
-							)
-							) {
-								continue;
-							}
-
-							if ( isset( $extension ) && isset( $extension::$version ) ) {
-								$extensions[ $key ] = $extension::$version;
-							} elseif ( isset( $extension->version ) ) {
-								$extensions[ $key ] = $extension->version;
-							} else {
-								$extensions[ $key ] = true;
-							}
-						}
-					}
-				}
-			}
-
-			return $extensions;
-
-		}
-
-		/**
 		 * Deprecated. Determines if theme is parent.
 		 *
 		 * @param string $file Path to file.
@@ -588,7 +344,7 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 		}
 
 		/**
-		 * Deprecated. Determines if theme is child.
+		 * Deprecated. Determines if the theme is child.
 		 *
 		 * @param string $file Path to file.
 		 *
@@ -602,7 +358,7 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 		}
 
 		/**
-		 * Determines if theme is child.
+		 * Determines if the theme is child.
 		 *
 		 * @param string $file Path to theme dir.
 		 *
@@ -721,33 +477,6 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 		}
 
 		/**
-		 * Return array of installed themes.
-		 *
-		 * @return array
-		 */
-		public static function get_wp_themes(): array {
-			global $wp_theme_paths;
-
-			$wp_theme_paths = array();
-			$themes         = wp_get_themes();
-
-			foreach ( $themes as $theme ) {
-				$path = Redux_Functions_Ex::wp_normalize_path( trailingslashit( $theme->get_theme_root() ) . $theme->get_template() );
-
-				if ( Redux_Functions_Ex::wp_normalize_path( realpath( $path ) ) !== $path ) {
-					$theme_paths[] = Redux_Functions_Ex::wp_normalize_path( realpath( $path ) );
-				}
-
-				$wp_theme_paths[ $path ] = Redux_Functions_Ex::wp_normalize_path( realpath( $path ) );
-			}
-
-			return array(
-				'full_paths'  => $wp_theme_paths,
-				'theme_paths' => $theme_paths,
-			);
-		}
-
-		/**
 		 * Get info for specified file.
 		 *
 		 * @param string $file File to check.
@@ -816,33 +545,6 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 		}
 
 		/**
-		 * Take a path and delete it
-		 *
-		 * @param string $dir Dir to remove.
-		 *
-		 * @since    3.3.3
-		 */
-		public static function rmdir( string $dir ) {
-			if ( is_dir( $dir ) ) {
-				$objects = scandir( $dir );
-
-				foreach ( $objects as $object ) {
-					if ( '.' !== $object && '..' !== $object ) {
-						if ( filetype( $dir . '/' . $object ) === 'dir' ) {
-							rmdir( $dir . '/' . $object );
-						} else {
-							unlink( $dir . '/' . $object );
-						}
-					}
-				}
-
-				reset( $objects );
-
-				rmdir( $dir );
-			}
-		}
-
-		/**
 		 * Field Render Function.
 		 * Takes the color hex value and converts to a rgba.
 		 *
@@ -883,37 +585,37 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 		/**
 		 * Deprecated. Returns string boolean value.
 		 *
-		 * @param mixed $var String to convert to true boolean.
+		 * @param mixed $variable String to convert to true boolean.
 		 *
 		 * @return mixed|array
 		 *
 		 * @deprecated No longer using camelCase naming convention.
 		 */
-		public static function makeBoolStr( $var ) { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName
+		public static function makeBoolStr( $variable ) { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName
 			_deprecated_function( __CLASS__ . '::' . __FUNCTION__, 'Redux 4.0.0', 'Redux_Instances::make_bool_str( $var )' );
 
-			return self::make_bool_str( $var );
+			return self::make_bool_str( $variable );
 		}
 
 		/**
 		 * Returns string boolean value.
 		 *
-		 * @param mixed $var true|false to convert.
+		 * @param mixed $variable true|false to convert.
 		 *
 		 * @return mixed|array
 		 */
-		public static function make_bool_str( $var ) {
-			if ( 'false' === $var || empty( $var ) ) {
+		public static function make_bool_str( $variable ) {
+			if ( 'false' === $variable || empty( $variable ) ) {
 				return 'false';
-			} elseif ( true === $var || 'true' === $var || 1 === $var || '1' === $var ) {
+			} elseif ( true === $variable || 'true' === $variable || 1 === $variable || '1' === $variable ) {
 				return 'true';
 			} else {
-				return $var;
+				return $variable;
 			}
 		}
 
 		/**
-		 * Compile localized array.
+		 * Compile a localized array.
 		 *
 		 * @param array $localize Array of localized strings.
 		 *
@@ -922,40 +624,6 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 		public static function localize( array $localize ): array {
 
 			return $localize;
-		}
-
-		/**
-		 * Retrieved request headers.
-		 *
-		 * @param array $args array of headers.
-		 *
-		 * @return array
-		 */
-		public static function get_request_headers( array $args = array() ): array {
-			$instances = Redux_Instances::get_all_instances();
-
-			$array = array(
-				'hash'       => self::get_hash(),
-				'developers' => wp_json_encode( self::get_developer_keys() ),
-				'redux'      => Redux_Core::$version,
-				'installed'  => Redux_Core::$installed,
-				'debug'      => defined( 'WP_DEBUG' ) && WP_DEBUG,
-				'local'      => self::is_local_host(),
-				'wordpress'  => get_bloginfo( 'version' ),
-				'site'       => esc_url( home_url( '/' ) ),
-				'auto_fonts' => get_option( 'auto_update_redux_google_fonts', false ),
-				'extensions' => join( '|', array_keys( self::get_extensions() ) ),
-			);
-
-			if ( ! empty( $instances ) ) {
-				$array['opt_names'] = join( '|', array_keys( $instances ) );
-			}
-
-			if ( ! empty( $args ) ) {
-				return wp_parse_args( $args, $array );
-			}
-
-			return $array;
 		}
 
 		/**
@@ -969,298 +637,8 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 			if ( defined( 'RDX_MOKAMA' ) ) {
 				return Redux_Functions_Ex::s();
 			}
+
 			return false;
-		}
-
-		/**
-		 * Deprecated. Compiles array of system specs.
-		 *
-		 * @param boolean $json_output   Enable/Disable return in JSON format.
-		 * @param boolean $remote_checks Enable/Disable remote URL testing.
-		 *
-		 * @return array::compile_system_status( $json_output, $remote_checks )
-		 * @deprecated No longer using camelCase naming convention.
-		 */
-		public static function compileSystemStatus( bool $json_output, bool $remote_checks ): array { // phpcs:ignore WordPress.NamingConventions.ValidFunctionName
-			_deprecated_function( __CLASS__ . '::' . __FUNCTION__, 'Redux 4.0.0', 'Redux_Instances::compile_system_status( $json_output, $remote_checks )' );
-
-			return self::compile_system_status( $json_output, $remote_checks );
-		}
-
-		/**
-		 * Compiles array of system specs.
-		 *
-		 * @param bool $json_output   Do output file as JSON string.
-		 * @param bool $remote_checks Perform remote checks.
-		 *
-		 * @return array
-		 */
-		public static function compile_system_status( bool $json_output = false, bool $remote_checks = false ): array {
-			global $wpdb;
-
-			$sysinfo = array();
-
-			$sysinfo['home_url']       = home_url();
-			$sysinfo['site_url']       = site_url();
-			$sysinfo['redux_ver']      = esc_html( Redux_Core::$version );
-			$sysinfo['redux_data_dir'] = Redux_Core::$upload_dir;
-
-			$fs        = Redux_Filesystem::get_instance();
-			$test_file = Redux_Core::$upload_dir . 'test-log.log';
-
-			if ( $fs->is_file( $test_file ) ) {
-				$res = $fs->unlink( $test_file );
-			} else {
-				$res = $fs->touch( $test_file );
-				$fs->unlink( $test_file );
-			}
-
-			// Only is a file-write check.
-			$sysinfo['redux_data_writeable'] = $res;
-			$sysinfo['wp_content_url']       = WP_CONTENT_URL;
-			$sysinfo['wp_ver']               = get_bloginfo( 'version' );
-			$sysinfo['wp_multisite']         = is_multisite();
-			$sysinfo['permalink_structure']  = get_option( 'permalink_structure' ) ? get_option( 'permalink_structure' ) : 'Default';
-			$sysinfo['front_page_display']   = get_option( 'show_on_front' );
-			if ( 'page' === $sysinfo['front_page_display'] ) {
-				$front_page_id = get_option( 'page_on_front' );
-				$blog_page_id  = get_option( 'page_for_posts' );
-
-				$sysinfo['front_page'] = 0 !== $front_page_id ? get_the_title( $front_page_id ) . ' (#' . $front_page_id . ')' : 'Unset';
-				$sysinfo['posts_page'] = 0 !== $blog_page_id ? get_the_title( $blog_page_id ) . ' (#' . $blog_page_id . ')' : 'Unset';
-			}
-
-			$sysinfo['wp_mem_limit']['raw']  = self::let_to_num( WP_MEMORY_LIMIT );
-			$sysinfo['wp_mem_limit']['size'] = size_format( $sysinfo['wp_mem_limit']['raw'] );
-
-			$sysinfo['db_table_prefix'] = 'Length: ' . strlen( $wpdb->prefix ) . ' - Status: ' . ( strlen( $wpdb->prefix ) > 16 ? 'ERROR: Too long' : 'Acceptable' );
-
-			$sysinfo['wp_debug'] = false;
-			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-				$sysinfo['wp_debug'] = true;
-			}
-
-			$sysinfo['wp_lang'] = get_locale();
-
-			if ( ! class_exists( 'ReduxBrowser' ) ) {
-				require_once Redux_Core::$dir . 'inc/lib/browser.php';
-			}
-
-			$browser = new ReduxBrowser();
-
-			$sysinfo['browser'] = array(
-				'agent'    => $browser->getUserAgent(),
-				'browser'  => $browser->getBrowser(),
-				'version'  => $browser->getVersion(),
-				'platform' => $browser->getPlatform(),
-			);
-
-			$sysinfo['server_info'] = esc_html( Redux_Core::$server['SERVER_SOFTWARE'] );
-			$sysinfo['localhost']   = self::make_bool_str( self::is_local_host() );
-			$sysinfo['php_ver']     = function_exists( 'phpversion' ) ? esc_html( phpversion() ) : 'phpversion() function does not exist.';
-			$sysinfo['abspath']     = ABSPATH;
-
-			if ( function_exists( 'ini_get' ) ) {
-				$sysinfo['php_mem_limit']      = size_format( self::let_to_num( ini_get( 'memory_limit' ) ) );
-				$sysinfo['php_post_max_size']  = size_format( self::let_to_num( ini_get( 'post_max_size' ) ) );
-				$sysinfo['php_time_limit']     = ini_get( 'max_execution_time' );
-				$sysinfo['php_max_input_var']  = ini_get( 'max_input_vars' );
-				$sysinfo['php_display_errors'] = self::make_bool_str( ini_get( 'display_errors' ) );
-			}
-
-			$sysinfo['suhosin_installed'] = extension_loaded( 'suhosin' );
-			$sysinfo['mysql_ver']         = $wpdb->db_version();
-			$sysinfo['max_upload_size']   = size_format( wp_max_upload_size() );
-
-			$sysinfo['def_tz_is_utc'] = true;
-			if ( date_default_timezone_get() !== 'UTC' ) {
-				$sysinfo['def_tz_is_utc'] = false;
-			}
-
-			$sysinfo['fsockopen_curl'] = false;
-
-			if ( function_exists( 'fsockopen' ) || function_exists( 'curl_init' ) ) {
-				$sysinfo['fsockopen_curl'] = true;
-			}
-
-			if ( true === $remote_checks ) {
-				$response = wp_remote_post(
-					'https://api.redux.io/status',
-					array(
-						'sslverify' => true,
-						'timeout'   => 60,
-						'headers'   => self::get_request_headers(),
-					)
-				);
-
-				if ( ! is_wp_error( $response ) && $response['response']['code'] >= 200 && $response['response']['code'] < 300 ) {
-					$sysinfo['wp_remote_post']       = true;
-					$sysinfo['wp_remote_post_error'] = '';
-				} else {
-					$sysinfo['wp_remote_post']       = false;
-					$sysinfo['wp_remote_post_error'] = $response->get_error_message();
-				}
-
-				// phpcs:ignore WordPress.PHP.NoSilencedErrors
-				$response = @wp_remote_get( 'https://raw.githubusercontent.com/dovy/redux-framework/master/CONTRIBUTING.md' );
-
-				if ( ! is_wp_error( $response ) && $response['response']['code'] >= 200 && $response['response']['code'] < 300 ) {
-					$sysinfo['wp_remote_get']       = true;
-					$sysinfo['wp_remote_get_error'] = '';
-				} else {
-					$sysinfo['wp_remote_get']       = false;
-					$sysinfo['wp_remote_get_error'] = $response->get_error_message();
-				}
-			}
-
-			$active_plugins = (array) get_option( 'active_plugins', array() );
-
-			if ( is_multisite() ) {
-				$active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
-			}
-
-			$sysinfo['plugins'] = array();
-
-			foreach ( $active_plugins as $plugin ) {
-				if ( file_exists( WP_PLUGIN_DIR . '/' . $plugin ) ) {
-					// phpcs:ignore WordPress.PHP.NoSilencedErrors
-					$plugin_data = @get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin );
-					$plugin_name = esc_html( $plugin_data['Name'] );
-
-					$sysinfo['plugins'][ $plugin_name ] = $plugin_data;
-				}
-			}
-
-			$redux = Redux::all_instances();
-
-			$sysinfo['redux_instances'] = array();
-
-			if ( ! empty( $redux ) && is_array( $redux ) ) {
-				foreach ( $redux as $inst => $data ) {
-					Redux::init( $inst );
-
-					$sysinfo['redux_instances'][ $inst ]['args']     = $data->args;
-					$sysinfo['redux_instances'][ $inst ]['sections'] = $data->sections;
-					foreach ( $sysinfo['redux_instances'][ $inst ]['sections'] as $key => $section ) {
-						if ( isset( $section['fields'] ) && is_array( $section['fields'] ) ) {
-							foreach ( $section['fields'] as $field_key => $field ) {
-								if ( isset( $field['validate_callback'] ) ) {
-									unset( $sysinfo['redux_instances'][ $inst ]['sections'][ $key ]['fields'][ $field_key ]['validate_callback'] );
-								}
-								if ( 'js_button' === $field['type'] ) {
-									if ( isset( $field['script'] ) && isset( $field['script']['ver'] ) ) {
-										unset( $sysinfo['redux_instances'][ $inst ]['sections'][ $key ]['fields'][ $field_key ]['script']['ver'] );
-									}
-								}
-							}
-						}
-					}
-
-					$sysinfo['redux_instances'][ $inst ]['extensions'] = Redux::get_extensions( $inst );
-
-					if ( isset( $data->extensions['metaboxes'] ) ) {
-						$data->extensions['metaboxes']->init();
-						$sysinfo['redux_instances'][ $inst ]['metaboxes'] = $data->extensions['metaboxes']->boxes;
-					}
-
-					if ( isset( $data->args['templates_path'] ) && '' !== $data->args['templates_path'] ) {
-						$sysinfo['redux_instances'][ $inst ]['templates'] = self::get_redux_templates( $data->args['templates_path'] );
-					}
-				}
-			}
-
-			$active_theme = wp_get_theme();
-
-			$sysinfo['theme']['name']       = $active_theme->Name; // phpcs:ignore WordPress.NamingConventions.ValidVariableName
-			$sysinfo['theme']['version']    = $active_theme->Version; // phpcs:ignore WordPress.NamingConventions.ValidVariableName
-			$sysinfo['theme']['author_uri'] = $active_theme->{'Author URI'};
-			$sysinfo['theme']['is_child']   = self::make_bool_str( is_child_theme() );
-
-			if ( is_child_theme() ) {
-				$parent_theme = wp_get_theme( $active_theme->Template ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName
-
-				$sysinfo['theme']['parent_name']       = $parent_theme->Name; // phpcs:ignore WordPress.NamingConventions.ValidVariableName
-				$sysinfo['theme']['parent_version']    = $parent_theme->Version; // phpcs:ignore WordPress.NamingConventions.ValidVariableName
-				$sysinfo['theme']['parent_author_uri'] = $parent_theme->{'Author URI'};
-			}
-
-			return $sysinfo;
-		}
-
-		/**
-		 * Returns array of Redux templates.
-		 *
-		 * @param string $custom_template_path The Path to template dir.
-		 *
-		 * @return array
-		 */
-		private static function get_redux_templates( string $custom_template_path ): array {
-			Redux_Filesystem::get_instance();
-
-			$template_paths     = array( 'ReduxFramework' => Redux_Core::$dir . 'templates/panel' );
-			$scanned_files      = array();
-			$found_files        = array();
-			$outdated_templates = false;
-
-			foreach ( $template_paths as $plugin_name => $template_path ) {
-				$scanned_files[ $plugin_name ] = self::scan_template_files( $template_path );
-			}
-
-			foreach ( $scanned_files as $plugin_name => $files ) {
-				foreach ( $files as $file ) {
-					if ( file_exists( $custom_template_path . '/' . $file ) ) {
-						$theme_file = $custom_template_path . '/' . $file;
-					} else {
-						$theme_file = false;
-					}
-
-					if ( $theme_file ) {
-						$core_version  = self::get_template_version( Redux_Core::$dir . 'templates/panel/' . $file );
-						$theme_version = self::get_template_version( $theme_file );
-
-						if ( $core_version && ( empty( $theme_version ) || version_compare( $theme_version, $core_version, '<' ) ) ) {
-							if ( ! $outdated_templates ) {
-								$outdated_templates = true;
-							}
-
-							$found_files[ $plugin_name ][] = sprintf( '<code>%s</code> ' . esc_html__( 'version', 'redux-framework' ) . ' <strong style="color:red">%s</strong> ' . esc_html__( 'is out of date. The core version is', 'redux-framework' ) . ' %s', str_replace( WP_CONTENT_DIR . '/themes/', '', $theme_file ), $theme_version ? $theme_version : '-', $core_version );
-						} else {
-							$found_files[ $plugin_name ][] = sprintf( '<code>%s</code>', str_replace( WP_CONTENT_DIR . '/themes/', '', $theme_file ) );
-						}
-					}
-				}
-			}
-
-			return $found_files;
-		}
-
-		/**
-		 * Scan template files for ver changes.
-		 *
-		 * @param string $template_path The Path to templates.
-		 *
-		 * @return array
-		 */
-		private static function scan_template_files( string $template_path ): array {
-			$files  = scandir( $template_path );
-			$result = array();
-
-			if ( $files ) {
-				foreach ( $files as $value ) {
-					if ( ! in_array( $value, array( '.', '..' ), true ) ) {
-						if ( is_dir( $template_path . DIRECTORY_SEPARATOR . $value ) ) {
-							$sub_files = self::scan_template_files( $template_path . DIRECTORY_SEPARATOR . $value );
-							foreach ( $sub_files as $sub_file ) {
-								$result[] = $value . DIRECTORY_SEPARATOR . $sub_file;
-							}
-						} else {
-							$result[] = $value;
-						}
-					}
-				}
-			}
-
-			return $result;
 		}
 
 		/**
@@ -1300,8 +678,8 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 		 *
 		 * @param array $attributes Array of attributes.
 		 */
-		public static function html_attributes( array $attributes = array() ) {
-			$string = join(
+		public static function html_attributes( array $attributes = array() ): string {
+			return join(
 				' ',
 				array_map(
 					function ( $key ) use ( $attributes ) {
@@ -1314,35 +692,6 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 					array_keys( $attributes )
 				)
 			) . ' ';
-		}
-
-		/**
-		 * Output filesize based on letter indicator.
-		 *
-		 * @param string $size Size with letter.
-		 *
-		 * @return bool|int|string
-		 */
-		private static function let_to_num( string $size ) {
-			$l   = substr( $size, - 1 );
-			$ret = substr( $size, 0, - 1 );
-
-			switch ( strtoupper( $l ) ) {
-				case 'T':
-				case 'G':
-				case 'M':
-				case 'P':
-					$ret *= 1024;
-					break;
-				// Must remain recursive, do not use 'break'.
-				// Must remain recursive, do not use 'break'.
-				// Must remain recursive, do not use 'break'.
-				// Must remain recursive, do not use 'break'.
-				case 'K':
-					$ret *= 1024;
-			}
-
-			return $ret;
 		}
 
 		/**
@@ -1372,12 +721,12 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 		/**
 		 * Checks a nested capabilities array or string to determine if the current user meets the requirements.
 		 *
-		 * @param string|array $capabilities Permission string or array to check. See self::user_can() for details.
+		 * @param string|array $caps Permission string or array to check. See self::user_can() for details.
 		 *
 		 * @return bool Whether the user meets the requirements. False on invalid user.
 		 * @since 3.6.3.4
 		 */
-		public static function current_user_can( $capabilities ): bool {
+		public static function current_user_can( $caps ): bool { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found
 			$current_user = wp_get_current_user();
 
 			if ( empty( $current_user ) ) {
@@ -1387,7 +736,7 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 			$name_arr = func_get_args();
 			$args     = array_merge( array( $current_user ), $name_arr );
 
-			return call_user_func_array( array( 'self', 'user_can' ), $args );
+			return call_user_func_array( array( __CLASS__, 'user_can' ), $args );
 		}
 
 		/**
@@ -1396,10 +745,10 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 		 * The capability 'relation' is reserved for controlling the relation mode (AND/OR), which defaults to AND.
 		 * Max depth of 30 levels.  False is returned for any conditions exceeding max depth.
 		 * If you want to check meta caps, you must also pass the object ID on which to check against.
-		 * If you get the error: PHP Notice:  Undefined offset: 0 in /wp-includes/capabilities.php, you didn't
+		 * If you get the error: PHP Notice: Undefined offset: 0 in /wp-includes/capabilities.php, you didn't
 		 * pass the required $object_id.
 		 *
-		 * @param int/object   $user          User ID or WP_User object to check. Defaults to the current user.
+		 * @param int|WP_User  $user          User ID or WP_User object to check. Defaults to the current user.
 		 * @param string|array $capabilities  Capability string or array to check. The array lets you use multiple
 		 *                                    conditions to determine if a user has permission.
 		 *                                    Invalid conditions are skipped (conditions which aren't a string/array/bool/number(cast to bool)).
@@ -1425,7 +774,7 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 		 * @since 3.6.3.4
 		 * @example
 		 *        user_can( 42, 'edit_pages' );                        // Checks if user ID 42 has the 'edit_pages' cap.
-		 *        user_can( 42, 'edit_page', 17433 );                  // Checks if user ID 42 has the 'edit_page' cap for post ID 17433.
+		 *        user_can( 42, 'edit_page', 17433 );                  // Checks if user ID 42 has the 'edit_page' cap for post-ID 17433.
 		 *        user_can( 42, array( 'edit_pages', 'edit_posts' ) ); // Checks if user ID 42 has both the 'edit_pages' and 'edit_posts' caps.
 		 */
 		public static function user_can( $user, $capabilities, int $object_id = null ): bool {
@@ -1452,11 +801,9 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 				}
 
 				return call_user_func_array( 'user_can', $args );
-			} else {
+			} elseif ( ! is_array( $capabilities ) ) {
 				// Only strings and arrays are allowed as valid capabilities.
-				if ( ! is_array( $capabilities ) ) {
-					return false;
-				}
+				return false;
 			}
 
 			// Capability array check.
@@ -1493,11 +840,11 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 
 						$expression_result = call_user_func_array( 'user_can', $args ) === true;
 					} elseif ( is_array( $value ) ) {
-						$depth ++;
+						++$depth;
 
 						$expression_result = self::user_can( $user, $value, $object_id );
 
-						$depth --;
+						--$depth;
 					} else {
 						// Invalid types are skipped.
 						continue;
@@ -1513,11 +860,11 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 
 						$expression_result = call_user_func_array( 'user_can', $args ) === (bool) $value;
 					} elseif ( is_array( $value ) ) {
-						$depth ++;
+						++$depth;
 
 						$expression_result = self::user_can( $user, $value, $object_id );
 
-						$depth --;
+						--$depth;
 					} else {
 						// Invalid types are skipped.
 						continue;
@@ -1530,11 +877,9 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 						// If the relation is OR, return on the first true expression.
 						return true;
 					}
-				} else {
-					if ( ! $expression_result ) {
-						// If the relation is AND, return on the first false expression.
-						return false;
-					}
+				} elseif ( ! $expression_result ) {
+					// If the relation is AND, return on the first false expression.
+					return false;
 				}
 			}
 
@@ -1549,10 +894,10 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 		 * @return bool
 		 */
 		public static function google_fonts_update_needed(): bool {
-
 			$path = trailingslashit( Redux_Core::$upload_dir ) . 'google_fonts.json';
 			$now  = time();
 			$secs = 60 * 60 * 24 * 7;
+
 			if ( file_exists( $path ) ) {
 				if ( ( $now - filemtime( $path ) ) < $secs ) {
 					return false;
@@ -1563,31 +908,7 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 		}
 
 		/**
-		 * Retrieve list of dev keys.
-		 *
-		 * @return array
-		 */
-		public static function get_developer_keys(): array {
-
-			// TODO - Get shim values for here.
-			// phpcs:ignore WordPress.NamingConventions.ValidHookName
-			$data = array( apply_filters( 'redux/tracking/developer', array() ) );
-
-			$instances = Redux_Instances::get_all_instances();
-
-			if ( ! empty( $instance ) ) {
-				foreach ( $instances as $instance ) {
-					if ( isset( $instance->args['developer'] ) && ! empty( $instance->args['developer'] ) ) {
-						$data[] = $instance->args['developer'];
-					}
-				}
-			}
-
-			return $data;
-		}
-
-		/**
-		 * Retrieve updated Google font array.
+		 * Retrieve an updated Google font array.
 		 *
 		 * @param bool $download Flag to download to file.
 		 *
@@ -1611,7 +932,6 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 						$url,
 						array(
 							'timeout' => 20,
-							'headers' => self::get_request_headers(),
 						)
 					);
 
@@ -1781,10 +1101,10 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 		/**
 		 * Sanitize array keys and values.
 		 *
-		 * @param array $array Array to sanitize.
+		 * @param array $arr Array to sanitize.
 		 */
-		public static function sanitize_array( array $array ): array {
-			return self::array_map_r( 'wp_kses_post', $array );
+		public static function sanitize_array( array $arr ): array {
+			return self::array_map_r( 'wp_kses_post', $arr );
 		}
 
 		/**
@@ -1806,127 +1126,13 @@ if ( ! class_exists( 'Redux_Helpers', false ) ) {
 		}
 
 		/**
-		 * AJAX callback.
-		 */
-		public static function hash_arg() {
-			echo esc_html( md5( Redux_Functions_Ex::hash_key() . '-redux' ) );
-			die();
-		}
-
-		/**
-		 * Adds stats parameters for Redux settings. Outside the main class as the class could also be in use in other ways.
-		 *
-		 * @param array $options Stats options.
-		 *
-		 * @return array
-		 */
-		public static function redux_stats_additions( array $options ): array {
-			$options['redux'] = array(
-				'demo_mode' => get_option( 'ReduxFrameworkPlugin' ),
-			);
-
-			return $options;
-		}
-
-		/**
-		 * AJAX callback Compile support arg.
-		 */
-		public static function support_args() {
-			header( 'Expires: Mon, 26 Jul 1997 05:00:00 GMT' );
-			header( 'Last-Modified: ' . gmdate( 'D, d M Y H:i:s' ) . 'GMT' );
-			header( 'Expires: Sat, 26 Jul 1997 05:00:00 GMT' );
-			header( 'Cache-Control: no-store, no-cache, must-revalidate' );
-			header( 'Cache-Control: post-check=0, pre-check=0', false );
-			header( 'Pragma: no-cache' );
-
-			$instances = Redux::all_instances();
-			$opt_name  = '';
-
-			if ( isset( $_REQUEST['i'] ) && ! empty( $_REQUEST['i'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-				if ( is_array( $instances ) && ! empty( $instances ) ) {
-					foreach ( $instances as $opt_name => $data ) {
-						if ( md5( $opt_name . '-debug' ) === $_REQUEST['i'] ) { // phpcs:ignore WordPress.Security.NonceVerification
-							$array = $data;
-						}
-					}
-				}
-
-				if ( isset( $array ) && '' !== $opt_name ) {
-
-					// We only want the extension names and versions.
-					$array->extensions = self::get_extensions( $opt_name );
-					$to_return         = array();
-
-					// Filter out all the unwanted data.
-					foreach ( $array as $key => $value ) {
-						if ( in_array(
-							$key,
-							array(
-								// 'fields',
-								'extensions',
-								'sections',
-								'args',
-								// 'field_types'
-							),
-							true
-						) ) {
-							$to_return[ $key ] = $value;
-						} else { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement
-							// phpcs:ignore Squiz.PHP.CommentedOutCode
-							/* echo $key.PHP_EOL; */
-						}
-					}
-					$array = $to_return;
-				} else {
-					die();
-				}
-			} else {
-				$array = self::get_statistics_object();
-				if ( is_array( $instances ) && ! empty( $instances ) ) {
-					$array['instances'] = array();
-					foreach ( $instances as $opt_name => $data ) {
-						$array['instances'][] = $opt_name;
-					}
-				}
-				$array['key'] = md5( Redux_Functions_Ex::hash_key() );
-			}
-
-			ksort( $array ); // Let's make that pretty.
-
-			// phpcs:ignored WordPress.PHP.NoSilencedErrors, WordPress.Security.EscapeOutput
-			echo @htmlspecialchars( @wp_json_encode( $array, true ), ENT_QUOTES );
-
-			die();
-		}
-
-		/**
-		 * Detect if Gutenberg is running on the current page.
-		 *
-		 * @return bool
-		 */
-		public static function is_gutenberg_page(): bool {
-			if ( function_exists( 'is_gutenberg_page' ) && is_gutenberg_page() ) {
-				// The Gutenberg plugin is on.
-				return true;
-			}
-
-			$current_screen = get_current_screen();
-
-			if ( method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() ) {
-				// Gutenberg page on 5+.
-				return true;
-			}
-			return false;
-		}
-
-		/**
 		 * Material design colors.
 		 *
 		 * @param string $context Mode to use.
 		 *
-		 * @return array|mixed
+		 * @return array
 		 */
-		public static function get_material_design_colors( string $context = 'primary' ) {
+		public static function get_material_design_colors( string $context = 'primary' ): array {
 			$colors = array(
 				'primary'     => array( '#FFFFFF', '#000000', '#F44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722', '#795548', '#9E9E9E', '#607D8B' ),
 				'red'         => array( '#FFEBEE', '#FFCDD2', '#EF9A9A', '#E57373', '#EF5350', '#F44336', '#E53935', '#D32F2F', '#C62828', '#B71C1C', '#FF8A80', '#FF5252', '#FF1744', '#D50000' ),

@@ -29,10 +29,10 @@ function redux_change( variable ) {
 
 	(function( $ ) {
 		var rContainer;
-		var opt_name;
 		var parentID;
 		var id;
 		var th;
+		var li;
 		var subParent;
 		var errorCount;
 		var errorsLeft;
@@ -42,12 +42,6 @@ function redux_change( variable ) {
 		variable = $( variable );
 
 		rContainer = $( variable ).parents( '.redux-container:first' );
-
-		if ( redux.customizer ) {
-			opt_name = $( '.redux-customizer-opt-name' ).data( 'opt-name' );
-		} else {
-			opt_name = $.redux.getOptName( rContainer );
-		}
 
 		$( 'body' ).trigger( 'check_dependencies', variable );
 
@@ -63,27 +57,28 @@ function redux_change( variable ) {
 		id = id[0];
 
 		th        = rContainer.find( '.redux-group-tab-link-a[data-key="' + id + '"]' ).parents( '.redux-group-tab-link-li:first' );
-		subParent = $( '#' + parentID + '_li' ).parents( '.hasSubSections:first' );
+		li        = $( '#' + parentID + '_li' );
+		subParent = li.parents( '.hasSubSections:first' );
 
 		if ( $( variable ).parents( 'fieldset.redux-field:first' ).hasClass( 'redux-field-error' ) ) {
 			$( variable ).parents( 'fieldset.redux-field:first' ).removeClass( 'redux-field-error' );
-			$( variable ).parent().find( '.redux-th-error' ).slideUp();
+			$( variable ).parents().find( '.redux-th-error' ).slideUp();
 
 			errorCount = ( parseInt( rContainer.find( '.redux-field-errors span' ).text(), 0 ) - 1 );
 
 			if ( errorCount <= 0 ) {
 				$( '#' + parentID + '_li .redux-menu-error' ).fadeOut( 'fast' ).remove();
 				$( '#' + parentID + '_li .redux-group-tab-link-a' ).removeClass( 'hasError' );
-				$( '#' + parentID + '_li' ).parents( '.inside:first' ).find( '.redux-field-errors' ).slideUp();
+				li.parents( '.inside:first' ).find( '.redux-field-errors' ).slideUp();
 				$( variable ).parents( '.redux-container:first' ).find( '.redux-field-errors' ).slideUp();
 				$( '#redux_metaboxes_errors' ).slideUp();
 			} else {
-				errorsLeft = ( parseInt( th.find( '.redux-menu-error:first' ).text(), 0 ) - 1 );
+				errorsLeft = ( parseInt( th.find( 'li .redux-menu-error:first' ).text(), 0 ) - 1 );
 
 				if ( errorsLeft <= 0 ) {
 					th.find( '.redux-menu-error:first' ).fadeOut().remove();
 				} else {
-					th.find( '.redux-menu-error:first' ).text( errorsLeft );
+					th.find( 'li .redux-menu-error:first' ).text( errorsLeft );
 				}
 
 				rContainer.find( '.redux-field-errors span' ).text( errorCount );
@@ -105,13 +100,13 @@ function redux_change( variable ) {
 			if ( warningCount <= 0 ) {
 				$( '#' + parentID + '_li .redux-menu-warning' ).fadeOut( 'fast' ).remove();
 				$( '#' + parentID + '_li .redux-group-tab-link-a' ).removeClass( 'hasWarning' );
-				$( '#' + parentID + '_li' ).parents( '.inside:first' ).find( '.redux-field-warnings' ).slideUp();
+				li.parents( '.inside:first' ).find( '.redux-field-warnings' ).slideUp();
 				$( variable ).parents( '.redux-container:first' ).find( '.redux-field-warnings' ).slideUp();
 				$( '#redux_metaboxes_warnings' ).slideUp();
 			} else {
 
 				// Let's count down the warnings now. Fancy.  ;).
-				warningsLeft = ( parseInt( th.find( '.redux-menu-warning:first' ).text(), 0 ) - 1 );
+				warningsLeft = ( parseInt( th.find( 'li .redux-menu-warning:first' ).text(), 0 ) - 1 );
 
 				if ( warningsLeft <= 0 ) {
 					th.find( '.redux-menu-warning:first' ).fadeOut().remove();
@@ -119,7 +114,7 @@ function redux_change( variable ) {
 					th.find( '.redux-menu-warning:first' ).text( warningsLeft );
 				}
 
-				rContainer.find( '.redux-field-warning span' ).text( warningCount );
+				rContainer.find( 'li .redux-field-warning span' ).text( warningCount );
 			}
 
 			if ( 0 !== subParent.length ) {

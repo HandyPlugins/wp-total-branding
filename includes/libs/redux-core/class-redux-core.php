@@ -101,7 +101,7 @@ if ( ! class_exists( 'Redux_Core', false ) ) {
 		public static $pro_loaded = false;
 
 		/**
-		 * Pointer to updated google fonts array.
+		 * Pointer to an updated Google fonts array.
 		 *
 		 * @var array
 		 */
@@ -113,13 +113,6 @@ if ( ! class_exists( 'Redux_Core', false ) ) {
 		 * @var array
 		 */
 		public static $callers = array();
-
-		/**
-		 * Nonce.
-		 *
-		 * @var string
-		 */
-		public static $wp_nonce;
 
 		/**
 		 * Pointer to _SERVER global.
@@ -141,34 +134,6 @@ if ( ! class_exists( 'Redux_Core', false ) ) {
 		 * @var null
 		 */
 		public static $welcome = null;
-
-		/**
-		 * Redux Appsero object.
-		 *
-		 * @var null
-		 */
-		public static $appsero = null;
-
-		/**
-		 * Redux Insights object.
-		 *
-		 * @var null
-		 */
-		public static $insights = null;
-
-		/**
-		 * Flag for Redux Template enabled status.
-		 *
-		 * @var bool
-		 */
-		public static $redux_templates_enabled = false;
-
-		/**
-		 * Flag for Extendify Template enabled status.
-		 *
-		 * @var bool
-		 */
-		public static $extendify_templates_enabled = true;
 
 		/**
 		 * Creates instance of class.
@@ -193,15 +158,12 @@ if ( ! class_exists( 'Redux_Core', false ) ) {
 		/**
 		 * Things to run after pluggable.php had loaded.
 		 */
-		public static function plugins_loaded() {
-			Redux_Functions_Ex::pro_to_ext();
-		}
+		public static function plugins_loaded() {}
 
 		/**
 		 * Class init.
 		 */
 		private function init() {
-
 			self::$server = array(
 				'SERVER_SOFTWARE' => '',
 				'REMOTE_ADDR'     => Redux_Helpers::is_local_host() ? '127.0.0.1' : '',
@@ -233,20 +195,8 @@ if ( ! class_exists( 'Redux_Core', false ) ) {
 
 			Redux_Functions_Ex::generator();
 
-			if ( ! class_exists( 'ReduxAppsero\Client' ) ) {
-				require_once Redux_Path::get_path( '/appsero/Client.php' );
-			}
-
 			if ( defined( 'REDUX_PLUGIN_FILE' ) ) {
-				$client      = new ReduxAppsero\Client( 'f6b61361-757e-4600-bb0f-fe404ae9871b', 'Redux Framework', REDUX_PLUGIN_FILE );
 				$plugin_info = Redux_Functions_Ex::is_inside_plugin( REDUX_PLUGIN_FILE );
-			} else {
-				$client = new ReduxAppsero\Client( 'f6b61361-757e-4600-bb0f-fe404ae9871b', 'Redux Framework', __FILE__ );
-				// See if Redux is a plugin or not.
-
-				$client->slug       = 'redux-framework';
-				$client->textdomain = 'redux-framework';
-				$client->version    = self::$version;
 			}
 
 			$plugin_info = Redux_Functions_Ex::is_inside_plugin( __FILE__ );
@@ -256,55 +206,14 @@ if ( ! class_exists( 'Redux_Core', false ) ) {
 				self::$is_plugin = class_exists( 'Redux_Framework_Plugin' );
 				self::$as_plugin = true;
 				self::$url       = trailingslashit( dirname( $plugin_info['url'] ) );
-				if ( isset( $plugin_info['slug'] ) && ! empty( $plugin_info['slug'] ) ) {
-					$client->slug = $plugin_info['slug'];
-				}
-				$client->type = 'plugin';
 			} else {
 				$theme_info = Redux_Functions_Ex::is_inside_theme( __FILE__ );
 				if ( false !== $theme_info ) {
 					self::$url       = trailingslashit( dirname( $theme_info['url'] ) );
 					self::$in_theme  = true;
 					self::$installed = 'in_theme';
-					if ( isset( $theme_info['slug'] ) && ! empty( $theme_info['slug'] ) ) {
-						$client->slug = $theme_info['slug'];
-					}
-					$client->type = 'theme';
 				}
 			}
-
-			self::$appsero = $client;
-
-			// Activate insights.
-			self::$insights = self::$appsero->insights();
-
-			if ( class_exists( 'Redux_Pro' ) ) {
-				self::$insights->add_extra(
-					array(
-						'pro'    => Redux_Pro::$version,
-						'mokama' => Redux_Helpers::mokama(),
-					)
-				);
-			}
-
-			self::$insights->hide_notice()->init();
-			if ( ! defined( 'REDUX_PLUGIN_FILE' ) ) {
-				remove_action( 'admin_footer', array( self::$insights, 'deactivate_scripts' ) );
-			}
-
-			if ( ! self::$insights->tracking_allowed() ) {
-				if ( ! self::$insights->notice_dismissed() ) {
-					// Old tracking permissions.
-					$tracking_options = get_option( 'redux-framework-tracking', array() );
-					if ( ! empty( $tracking_options ) ) {
-						if ( isset( $tracking_options['allow_tracking'] ) && 'yes' === $tracking_options['allow_tracking'] ) {
-							Redux_Functions_Ex::set_activated();
-						}
-					}
-				}
-			}
-
-			remove_action( 'redux_admin_notices_run', array( 'ReduxAppsero\Insights', 'admin_notice' ) );
 
 			// phpcs:ignore WordPress.NamingConventions.ValidHookName
 			self::$url = apply_filters( 'redux/url', self::$url );
@@ -331,15 +240,14 @@ if ( ! class_exists( 'Redux_Core', false ) ) {
 		}
 
 		/**
-		 * Code to execute on framework __construct.
+		 * Code to execute on a framework __construct.
 		 *
-		 * @param object $parent Pointer to ReduxFramework object.
+		 * @param object $redux Pointer to ReduxFramework object.
 		 */
-		public static function core_construct( $parent ) {
-			self::$third_party_fixes = new Redux_ThirdParty_Fixes( $parent );
+		public static function core_construct( $redux ) {
+			self::$third_party_fixes = new Redux_ThirdParty_Fixes( $redux );
 
 			Redux_ThemeCheck::get_instance();
-
 		}
 
 		/**
@@ -352,22 +260,21 @@ if ( ! class_exists( 'Redux_Core', false ) ) {
 				self::$pro_loaded = true;
 			}
 
-			require_once dirname( __FILE__ ) . '/inc/classes/class-redux-path.php';
-			require_once dirname( __FILE__ ) . '/inc/classes/class-redux-functions-ex.php';
-			require_once dirname( __FILE__ ) . '/inc/classes/class-redux-helpers.php';
-			// require_once dirname( __FILE__ ) . '/inc/classes/class-redux-enable-gutenberg.php';
-			require_once dirname( __FILE__ ) . '/inc/classes/class-redux-instances.php';
-			Redux_Functions_Ex::register_class_path( 'Redux', dirname( __FILE__ ) . '/inc/classes' );
-			Redux_Functions_Ex::register_class_path( 'Redux', dirname( __FILE__ ) . '/inc/welcome' );
+			require_once __DIR__ . '/inc/classes/class-redux-path.php';
+			require_once __DIR__ . '/inc/classes/class-redux-functions-ex.php';
+			require_once __DIR__ . '/inc/classes/class-redux-helpers.php';
+			require_once __DIR__ . '/inc/classes/class-redux-instances.php';
+
+			Redux_Functions_Ex::register_class_path( 'Redux', __DIR__ . '/inc/classes' );
+			Redux_Functions_Ex::register_class_path( 'Redux', __DIR__ . '/inc/welcome' );
+			Redux_Functions_Ex::load_extendify_css();
+
 			spl_autoload_register( array( $this, 'register_classes' ) );
 
 			self::$welcome = new Redux_Welcome();
-			new Redux_Rest_Api_Builder();
 
 			add_action( 'admin_init', array( $this, 'admin_init' ) );
-
 			add_filter( 'debug_information', array( $this, 'add_debug_info' ) );
-			add_filter( 'redux/tracking/options', array( 'Redux_Helpers', 'redux_stats_additions' ) );
 		}
 
 		/**
@@ -376,7 +283,6 @@ if ( ! class_exists( 'Redux_Core', false ) ) {
 		 * @param array $debug_info Debug data.
 		 *
 		 * @return array
-		 * @noinspection PhpIncludeInspection
 		 * @throws ReflectionException Exception.
 		 */
 		public function add_debug_info( array $debug_info ): array {
@@ -617,7 +523,7 @@ if ( ! class_exists( 'Redux_Core', false ) ) {
 		 * @return bool
 		 */
 		public static function is_heartbeat(): bool {
-			// Disregard WP AJAX 'heartbeat'call.  Why waste resources?
+			// Disregard WP AJAX 'heartbeat' call.  Why waste resources?
 			if ( isset( $_POST ) && isset( $_POST['_nonce'] ) && wp_verify_nonce( sanitize_key( wp_unslash( $_POST['_nonce'] ) ), 'heartbeat-nonce' ) ) {
 
 				if ( isset( $_POST['action'] ) && 'heartbeat' === sanitize_text_field( wp_unslash( $_POST['action'] ) ) ) {

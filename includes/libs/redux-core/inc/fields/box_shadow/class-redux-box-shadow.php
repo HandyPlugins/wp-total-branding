@@ -108,7 +108,7 @@ if ( ! class_exists( 'Redux_Box_Shadow', false ) ) {
 					echo '</li>';
 					echo '<li>';
 					echo '<div class="slider-' . esc_attr( $shadow_type ) . '-horizontal">';
-					echo '<label>' . esc_html__( 'Horizontal Length ', 'redux-framework' ) . ':  <strong>' . esc_html( $this->value[ $shadow_type . '-shadow' ]['horizontal'] ) . 'px</strong></label>';
+					echo esc_html__( 'Horizontal Length ', 'redux-framework' ) . ':  <strong>' . esc_html( $this->value[ $shadow_type . '-shadow' ]['horizontal'] ) . 'px</strong>';
 					echo '<div
                             class="redux-box-shadow-slider redux-box-shadow-' . esc_attr( $shadow_type ) . ' redux-' . esc_attr( $shadow_type ) . '-horizontal ' . esc_attr( $shadow_type ) . '-horizontal-input ' . esc_attr( $this->field['class'] ) . '"
                             id="' . esc_attr( $this->field['id'] ) . '"
@@ -132,7 +132,7 @@ if ( ! class_exists( 'Redux_Box_Shadow', false ) ) {
 					echo '</li>';
 					echo '<li>';
 					echo '<div class="slider-' . esc_attr( $shadow_type ) . '-vertical">';
-					echo '<label>' . esc_html__( 'Vertical Length ', 'redux-framework' ) . ':  <strong>' . esc_html( $this->value[ $shadow_type . '-shadow' ]['vertical'] ) . 'px</strong></label>';
+					echo esc_html__( 'Vertical Length ', 'redux-framework' ) . ':  <strong>' . esc_html( $this->value[ $shadow_type . '-shadow' ]['vertical'] ) . 'px</strong>';
 					echo '<div
                                 class="redux-box-shadow-slider redux-box-shadow-' . esc_attr( $shadow_type ) . ' redux-' . esc_attr( $shadow_type ) . '-vertical ' . esc_attr( $shadow_type ) . '-vertical-input ' . esc_attr( $this->field['class'] ) . '"
                                 id="' . esc_attr( $this->field['id'] ) . '"
@@ -156,7 +156,7 @@ if ( ! class_exists( 'Redux_Box_Shadow', false ) ) {
 					echo '</li>';
 					echo '<li>';
 					echo '<div class="slider-' . esc_attr( $shadow_type ) . '-blur">';
-					echo '<label>' . esc_html__( 'Blur Radius ', 'redux-framework' ) . ':  <strong>' . esc_html( $this->value[ $shadow_type . '-shadow' ]['blur'] ) . 'px</strong></label>';
+					echo esc_html__( 'Blur Radius ', 'redux-framework' ) . ':  <strong>' . esc_html( $this->value[ $shadow_type . '-shadow' ]['blur'] ) . 'px</strong>';
 					echo '<div
                                 class="redux-box-shadow-slider redux-box-shadow-' . esc_attr( $shadow_type ) . ' redux-' . esc_attr( $shadow_type ) . '-blur ' . esc_attr( $shadow_type ) . '-blur-input ' . esc_attr( $this->field['class'] ) . '"
                                 id="' . esc_attr( $this->field['id'] ) . '"
@@ -180,7 +180,7 @@ if ( ! class_exists( 'Redux_Box_Shadow', false ) ) {
 					echo '</li>';
 					echo '<li>';
 					echo '<div class="slider-' . esc_attr( $shadow_type ) . '-spread">';
-					echo '<label>' . esc_html__( 'Spread ', 'redux-framework' ) . ':  <strong>' . esc_html( $this->value[ $shadow_type . '-shadow' ]['spread'] ) . 'px</strong></label>';
+					echo esc_html__( 'Spread ', 'redux-framework' ) . ':  <strong>' . esc_html( $this->value[ $shadow_type . '-shadow' ]['spread'] ) . 'px</strong>';
 					echo '<div
                                 class="redux-box-shadow-slider redux-box-shadow-' . esc_attr( $shadow_type ) . ' redux-' . esc_attr( $shadow_type ) . '-spread ' . esc_attr( $shadow_type ) . '-spread-input ' . esc_attr( $this->field['class'] ) . '"
                                 id="' . esc_attr( $this->field['id'] ) . '"
@@ -265,6 +265,17 @@ if ( ! class_exists( 'Redux_Box_Shadow', false ) ) {
 		}
 
 		/**
+		 * Do enqueue for each field instance.
+		 *
+		 * @return void
+		 */
+		public function always_enqueue() {
+			if ( isset( $this->field['color_alpha'] ) && ( $this->field['color_alpha'] || ( $this->field['color_alpha']['inset-shadow'] || $this->field['color_alpha']['drop-shadow'] ) ) ) {
+				wp_enqueue_script( 'redux-wp-color-picker-alpha' );
+			}
+		}
+
+		/**
 		 * Enqueue Function.
 		 * If this field requires any scripts, or CSS define this function and register/enqueue the scripts/css
 		 *
@@ -281,12 +292,8 @@ if ( ! class_exists( 'Redux_Box_Shadow', false ) ) {
 
 			$dep_array = array( 'jquery', 'wp-color-picker', 'redux-js' );
 
-			if ( isset( $this->field['color_alpha'] ) && ( $this->field['color_alpha'] || ( $this->field['color_alpha']['inset-shadow'] || $this->field['color_alpha']['drop-shadow'] ) ) ) {
-				wp_enqueue_script( 'redux-wp-color-picker-alpha-js' );
-			}
-
 			wp_enqueue_script(
-				'redux-field-box-shadow-js',
+				'redux-field-box-shadow',
 				Redux_Core::$url . 'inc/fields/box_shadow/redux-box-shadow' . $min . '.js',
 				$dep_array,
 				$this->timestamp,
@@ -294,14 +301,14 @@ if ( ! class_exists( 'Redux_Box_Shadow', false ) ) {
 			);
 
 			wp_enqueue_style(
-				'redux-nouislider-css',
+				'redux-nouislider',
 				Redux_Core::$url . 'assets/css/vendor/nouislider' . $min . '.css',
 				array(),
 				'5.0.0'
 			);
 
 			wp_enqueue_script(
-				'redux-nouislider-js',
+				'redux-nouislider',
 				Redux_Core::$url . 'assets/js/vendor/nouislider/redux.jquery.nouislider' . $min . '.js',
 				array( 'jquery' ),
 				'5.0.0',
@@ -310,13 +317,13 @@ if ( ! class_exists( 'Redux_Box_Shadow', false ) ) {
 
 			if ( $this->parent->args['dev_mode'] ) {
 				wp_enqueue_style(
-					'redux-field-box-shadow-css',
+					'redux-field-box-shadow',
 					Redux_Core::$url . 'inc/fields/box_shadow/redux-box-shadow.css',
 					array(),
 					time()
 				);
 
-				wp_enqueue_style( 'redux-color-picker-css' );
+				wp_enqueue_style( 'redux-color-picker' );
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 /* global reduxMetaboxes */
 
 jQuery(
-	function( $ ) {
+	function ( $ ) {
 		'use strict';
 
 		var isGutenberg = false;
@@ -9,7 +9,7 @@ jQuery(
 		$.reduxMetaBoxes = $.reduxMetaBoxes || {};
 
 		$( document ).ready(
-			function() {
+			function () {
 				$.reduxMetaBoxes.init();
 
 				if ( $( 'body' ).hasClass( 'block-editor-page' ) ) {
@@ -19,14 +19,14 @@ jQuery(
 		);
 
 		setTimeout(
-			function() {
+			function () {
 				if ( true === isGutenberg ) {
 					$( '.postbox .toggle-indicator' ).removeClass( 'toggle-indicator' ).addClass( 'el' );
 				}
 
 				$( '#publishing-action .button, #save-action .button, .editor-post-publish-button' ).on(
 					'click',
-					function() {
+					function () {
 						$( '.redux-save-warn' ).slideUp();
 
 						window.onbeforeunload = null;
@@ -36,7 +36,7 @@ jQuery(
 			1000
 		);
 
-		$.reduxMetaBoxes.init = function() {
+		$.reduxMetaBoxes.init = function () {
 			$.reduxMetaBoxes.notLoaded = true;
 
 			$.redux.initFields();
@@ -47,13 +47,31 @@ jQuery(
 
 			if ( isGutenberg ) {
 				setTimeout(
-					function() {
+					function () {
 						$.reduxMetaBoxes.checkBoxVisibility();
 
-						$( '.editor-post-format__content select' ).on(
+						$( '.editor-post-format__content select, .editor-post-format select' ).on(
 							'change',
-							function() {
+							function () {
 								$.reduxMetaBoxes.checkBoxVisibility( 'post_format' );
+							}
+						);
+
+						$( '.edit-post-post-template__toggle' ).on(
+							'click',
+							function () {
+								setTimeout(
+									function () {
+										$( '.components-popover .components-select-control__input' ).on(
+											'change',
+											function () {
+												console.log( 'change' );
+												$.reduxMetaBoxes.checkBoxVisibility( 'page_template' );
+											}
+										);
+									},
+									1000
+								);
 							}
 						);
 					},
@@ -64,35 +82,35 @@ jQuery(
 
 				$( '#page_template' ).on(
 					'change',
-					function() {
+					function () {
 						$.reduxMetaBoxes.checkBoxVisibility( 'page_template' );
 					}
 				);
 
 				$( 'input[name="post_format"]:radio' ).on(
 					'change',
-					function() {
+					function () {
 						$.reduxMetaBoxes.checkBoxVisibility( 'post_format' );
 					}
 				);
 			}
 		};
 
-		$.reduxMetaBoxes.checkBoxVisibility = function( fieldID ) {
+		$.reduxMetaBoxes.checkBoxVisibility = function ( fieldID ) {
 			if ( 0 !== reduxMetaboxes.length ) {
 				$.each(
 					reduxMetaboxes,
-					function( box, values ) {
+					function ( box, values ) {
 						$.each(
 							values,
-							function( field, v ) {
+							function ( field, v ) {
 								var visible = false;
 								var testValue;
 
 								if ( field === fieldID || ! fieldID ) {
 									if ( 'post_format' === field ) {
 										if ( isGutenberg ) {
-											testValue = $( ' .editor-post-format__content select option:selected' ).val();
+											testValue = $( '.editor-post-format__content select option:selected, .editor-post-format select option:Selected' ).val();
 										} else {
 											testValue = $( 'input:radio[name="post_format"]:checked' ).val();
 										}
@@ -103,7 +121,7 @@ jQuery(
 									if ( testValue ) {
 										$.each(
 											v,
-											function( key, val ) {
+											function ( key, val ) {
 												if ( val === testValue ) {
 													visible = true;
 												}
