@@ -1,17 +1,18 @@
 <?php
 /**
- * Plugin Name:     WP Total Branding
- * Plugin URI:      https://handyplugins.co/wp-total-branding/
- * Description:     Simple and powerful branding solution for WordPress.
- * Author:          HandyPlugins
- * Author URI:      https://handyplugins.co
- * Text Domain:     wp-total-branding
- * Domain Path:     /languages
- * Version:         1.1
+ * Plugin Name:       WP Total Branding
+ * Plugin URI:        https://handyplugins.co/wp-total-branding/
+ * Description:       Simple and powerful branding solution for WordPress.
+ * Version:           1.2
+ * Requires at least: 5.2
+ * Requires PHP:      7.1
+ * Author:            HandyPlugins
+ * Author URI:        https://handyplugins.co
+ * Text Domain:       wp-total-branding
+ * Domain Path:       /languages
  *
- * @package         WP_Total_Branding
+ * @package WP_Total_Branding
  */
-
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -75,7 +76,7 @@ if ( ! class_exists( 'WP_Total_Branding' ) ) :
 			}
 
 			if ( ! defined( 'WPTB_PLUGIN_VERSION' ) ) {
-				define( 'WPTB_PLUGIN_VERSION', '1.1' );
+				define( 'WPTB_PLUGIN_VERSION', '1.2' );
 			}
 
 			if ( ! defined( 'WPTB_PLUGIN_DIR' ) ) {

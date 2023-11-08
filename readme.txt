@@ -1,14 +1,15 @@
-=== WP Total Branding ===
-Contributors: handyplugins, m_uysl
-Tags: branding, custom-logo, admin menu, customize, while-label
+=== WP Total Branding - Complete branding solution for WordPress ===
+Contributors:      handyplugins, m_uysl
+Tags:              branding, custom-logo, admin menu, customize, while-label
 Requires at least: 5.2
-Tested up to: 6.0
-Stable tag: 1.1
-License: GPLv3
-Requires PHP: 7.1
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
+Tested up to:      6.4
+Stable tag:        1.2
+License:           GPLv3
+Requires PHP:      7.1
+License URI:       http://www.gnu.org/licenses/gpl-3.0.html
+Donate link:       https://handyplugins.co/donate/
 
-Make your WordPress setup unique. Change or remove WordPress footprints,features and much more...
+Make your WordPress unique. Change or remove WordPress footprints,features and much more...
 
 == Description ==
 
@@ -35,6 +36,15 @@ WP Total Branding is complete branding solution for your WordPress. Check out fe
 = Contributing & Bug Report =
 Bug reports and pull requests are welcome on [Github](https://github.com/HandyPlugins/wp-total-branding)
 
+__If you like WP Total Branding, then consider checking out our other projects:__
+
+* <a href="https://handyplugins.co/magic-login-pro/" rel="friend">Magic Login Pro</a> – Easy, secure, and passwordless authentication for WordPress.
+* <a href="https://handyplugins.co/easy-text-to-speech/" rel="friend">Easy Text-to-Speech for WordPress</a> – Transform your textual content into high-quality synthesized speech with Amazon Polly.
+* <a href="https://handyplugins.co/handywriter/" rel="friend">Handywriter</a> – AI-powered writing assistant that can help you create content for your WordPress.
+* <a href="https://handyplugins.co/paddlepress-pro/" rel="friend">PaddlePress PRO</a> – Paddle Plugin for WordPress
+* <a href="https://poweredcache.com/" rel="friend">Powered Cache</a> – Caching and Optimization for WordPress – Easily Improve PageSpeed & Web Vitals Score
+
+
 
 == Installation ==
 
@@ -53,6 +63,12 @@ Yes, indeed! Enable plugin by activating network wide and visit `Network Admin >
 
 
 == Changelog ==
+
+= 1.2 (Nov 8, 2023) =
+- Add composer support
+- Redux framework update (4.4.9)
+- Tested with WP 6.4
+- Minor tweaks
 
 = 1.1 (May 6, 2022) =
 - Tested with WP 6.0
