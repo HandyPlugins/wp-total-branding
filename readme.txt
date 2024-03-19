@@ -2,7 +2,7 @@
 Contributors:      handyplugins, m_uysl
 Tags:              branding, custom-logo, admin menu, customize, while-label
 Requires at least: 5.2
-Tested up to:      6.4
+Tested up to:      6.5
 Stable tag:        1.2
 License:           GPLv3
 Requires PHP:      7.1
@@ -44,7 +44,6 @@ __If you like WP Total Branding, then consider checking out our other projects:_
 * <a href="https://handyplugins.co/paddlepress-pro/" rel="friend">PaddlePress PRO</a> – Paddle Plugin for WordPress
 * <a href="https://poweredcache.com/" rel="friend">Powered Cache</a> – Caching and Optimization for WordPress – Easily Improve PageSpeed & Web Vitals Score
 * <a href="https://handyplugins.co/wp-accessibility-toolkit/" rel="friend">WP Accessibility Toolkit</a> – A collection of tools to help you make your WordPress more accessible.
-
 
 
 == Installation ==
