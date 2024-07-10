@@ -81,8 +81,8 @@ class WPTB_Login {
 	 *
 	 * @param string $title
 	 *
-	 * @since 1.0
 	 * @return string $title
+	 * @since 1.0
 	 */
 	public function header_title( $title ) {
 		$custom_title = trim( wptb_get_option( 'login-header-title' ) );
@@ -91,7 +91,7 @@ class WPTB_Login {
 			$title = $custom_title;
 		}
 
-		return $title;
+		return esc_html( $title );
 	}
 
 }

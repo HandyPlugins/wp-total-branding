@@ -34,9 +34,10 @@ Redux::setSection( $opt_name, array(
 			),
 		),
 		array(
-			'id'    => 'login-header-title',
-			'type'  => 'text',
-			'title' => __( 'Header Title', 'wp-total-branding' ),
+			'id'       => 'login-header-title',
+			'type'     => 'text',
+			'title'    => __( 'Header Title', 'wp-total-branding' ),
+			'sanitize' => 'sanitize_text_field',
 		),
 		array(
 			'id'       => 'login-header-url',
