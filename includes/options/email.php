@@ -27,6 +27,7 @@ Redux::setSection( $opt_name, array(
 			'type'     => 'text',
 			'title'    => 'From Name',
 			'validate' => 'not_empty',
+			'sanitize' => 'sanitize_text_field',
 		),
 		array(
 			'id'       => 'customemail-from-address',

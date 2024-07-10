@@ -25,6 +25,7 @@ Redux::setSection( $opt_name, array(
 			'type'       => 'editor',
 			'title'      => __( 'Message', 'wp-total-branding' ),
 			'full_width' => true,
+			'sanitize'   => 'wp_kses_post',
 			'args'       => array(
 				'wpautop'       => false,
 				'media_buttons' => false,

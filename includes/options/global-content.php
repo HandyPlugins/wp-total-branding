@@ -26,6 +26,7 @@ Redux::setSection( $opt_name, array(
 			'title'    => __( 'Header', 'wp-total-branding' ),
 			'subtitle' => __( 'will be display on every page of your network. You can add tracking code, embeds, etc.', 'wp-total-branding' ),
 			'default'  => '',
+			'sanitize' => 'wp_kses_post',
 			'args'     => array(
 				'wpautop'       => false,
 				'media_buttons' => false,
@@ -40,6 +41,7 @@ Redux::setSection( $opt_name, array(
 			'type'     => 'editor',
 			'title'    => __( 'Footer', 'wp-total-branding' ),
 			'default'  => '',
+			'sanitize' => 'wp_kses_post',
 			'args'     => array(
 				'wpautop'       => false,
 				'media_buttons' => false,

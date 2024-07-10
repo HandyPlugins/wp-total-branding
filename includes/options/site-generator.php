@@ -27,6 +27,7 @@ Redux::setSection( $opt_name, array(
 			'title'    => 'Site Generator Name',
 			'subtitle' => 'Enter custom generator name',
 			'default' => 'WordPress ' . get_bloginfo( 'version' ),
+			'sanitize' => 'sanitize_text_field',
 		),
 		array(
 			'required' => array( 'remove-site-generator', '=', '0' ),
@@ -36,6 +37,7 @@ Redux::setSection( $opt_name, array(
 			'title'    => 'Site Generator Link',
 			'subtitle' => 'Enter custom generator link',
 			'default'  => 'https://wordpress.org',
+			'sanitize' => 'esc_url_raw',
 		),
 	),
 ) );

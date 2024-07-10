@@ -24,18 +24,18 @@ Redux::setSection( $opt_name, array(
 			'default' => true,
 		),
 		array(
-
-			'id'      => 'dashboard-footer-content',
-			'type'    => 'editor',
-			'title'   => __( 'Dashboard Footer Content', 'wp-total-branding' ),
-			'default' => '',
-			'args'    => array(
+			'id'       => 'dashboard-footer-content',
+			'type'     => 'editor',
+			'title'    => __( 'Dashboard Footer Content', 'wp-total-branding' ),
+			'default'  => '',
+			'sanitize' => 'wp_kses_post',
+			'args'     => array(
 				'wpautop'       => false,
 				'media_buttons' => false,
 				'textarea_rows' => 5,
 				'teeny'         => false,
 				'quicktags'     => false,
-			)
+			),
 		),
 	)
 ) );
