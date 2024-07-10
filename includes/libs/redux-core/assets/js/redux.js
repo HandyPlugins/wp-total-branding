@@ -554,10 +554,6 @@ function colorNameToHex( colour ) {
 					redux.field_objects[type].init();
 				}
 
-				if ( 'undefined' !== typeof redux.field_objects.pro && ! $.isEmptyObject( redux.field_objects.pro[type] ) && redux.field_objects.pro[type] ) {
-					redux.field_objects.pro[type].init();
-				}
-
 				if ( ! redux.customizer && $( this ).hasClass( 'redux_remove_th' ) ) {
 					tr = $( this ).parents( 'tr:first' );
 					th = tr.find( 'th:first' );
@@ -1260,7 +1256,7 @@ function redux_change( variable ) {
 				$( variable ).parents( '.redux-container:first' ).find( '.redux-field-errors' ).slideUp();
 				$( '#redux_metaboxes_errors' ).slideUp();
 			} else {
-				errorsLeft = ( parseInt( th.find( 'li .redux-menu-error:first' ).text(), 0 ) - 1 );
+				errorsLeft = ( parseInt( th.find( '.redux-menu-error:first' ).text(), 0 ) - 1 );
 
 				if ( errorsLeft <= 0 ) {
 					th.find( '.redux-menu-error:first' ).fadeOut().remove();
@@ -1293,7 +1289,7 @@ function redux_change( variable ) {
 			} else {
 
 				// Let's count down the warnings now. Fancy.  ;).
-				warningsLeft = ( parseInt( th.find( 'li .redux-menu-warning:first' ).text(), 0 ) - 1 );
+				warningsLeft = ( parseInt( th.find( '.redux-menu-warning:first' ).text(), 0 ) - 1 );
 
 				if ( warningsLeft <= 0 ) {
 					th.find( '.redux-menu-warning:first' ).fadeOut().remove();
@@ -1438,6 +1434,13 @@ function redux_hook( object, functionName, callback, before ) {
 								}
 							}
 
+							if ( fieldset.hasClass( 'redux-container-content' ) ) {
+								$( '#heading-' + i ).hide().addClass( 'hide' );
+								$( '#subheading-' + i ).hide().addClass( 'hide' );
+								$( '#content-' + i ).hide().addClass( 'hide' );
+								$( '#submessage-' + i ).hide().addClass( 'hide' );
+							}
+
 							if ( fieldset.hasClass( 'redux-container-info' ) ) {
 								$( '#info-' + i ).hide().addClass( 'hide' );
 							}
@@ -1551,6 +1554,13 @@ function redux_hook( object, functionName, callback, before ) {
 						}
 					}
 
+					if ( childFieldset.hasClass( 'redux-container-content' ) ) {
+						$( '#heading-' + child ).hide().removeClass( 'hide' ).css( 'display', '');
+						$( '#subheading-' + child ).hide().removeClass( 'hide' ).css( 'display', '');
+						$( '#content-' + child ).hide().removeClass( 'hide' ).css( 'display', '');
+						$( '#submessage-' + child ).hide().removeClass( 'hide' ).css( 'display', '');
+					}
+
 					if ( childFieldset.hasClass( 'redux-container-info' ) ) {
 						$( '#info-' + child ).fadeIn( 300 ).removeClass( 'hide' );
 					}
@@ -1581,7 +1591,7 @@ function redux_hook( object, functionName, callback, before ) {
 						}
 					);
 
-					if ( childFieldset.hasClass( 'redux-container-section' ) || childFieldset.hasClass( 'redux-container-info' ) ) {
+					if ( childFieldset.hasClass( 'redux-container-section' ) || childFieldset.hasClass( 'redux-container-info' ) || childFieldset.hasClass( 'redux-container-content' ) ) {
 						tr.css( { display: 'none' } );
 					}
 				} else if ( false === show ) {
@@ -1640,6 +1650,13 @@ function redux_hook( object, functionName, callback, before ) {
 						$( '#section-table-' + id ).fadeOut( 50 ).addClass( 'hide' );
 						div.fadeOut( 50 ).addClass( 'hide' );
 					}
+				}
+
+				if ( theId.hasClass( 'redux-container-content' ) ) {
+					$( '#heading-' + id ).hide().addClass( 'hide' );
+					$( '#subheading-' + id ).hide().addClass( 'hide' );
+					$( '#content-' + id ).hide().addClass( 'hide' );
+					$( '#submessage-' + id ).hide().addClass( 'hide' );
 				}
 
 				if ( theId.hasClass( 'redux-container-info' ) ) {

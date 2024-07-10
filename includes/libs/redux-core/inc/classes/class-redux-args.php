@@ -159,14 +159,11 @@ if ( ! class_exists( 'Redux_Args', false ) ) {
 				'admin_theme'                      => 'wp',
 				'elusive_frontend'                 => false,
 				'fontawesome_frontend'             => false,
-				'pro'                              => array(),
+				'flyout_submenus'                  => true,
 				'font_display'                     => 'swap', // block|swap|fallback|optional.
 				'load_on_cron'                     => false,
 				'search'                           => false,
 			);
-
-			// phpcs:ignore WordPress.NamingConventions.ValidHookName
-			$default = apply_filters( 'redux/pro/args/defaults', $default );
 
 			$args = Redux_Functions::parse_args( $args, $default );
 

@@ -67,6 +67,11 @@ if ( ! class_exists( 'Redux_Social_Profiles' ) ) {
 				$default_id = $arr['id'];
 
 				foreach ( $settings as $a ) {
+					if ( isset( $a['data'] ) ) {
+						$a['data'] = rawurldecode( $a['data'] );
+						$a         = (array) json_decode( $a['data'] );
+					}
+
 					if ( $default_id === $a['id'] ) {
 						$search_default    = false;
 						$fixed_arr[ $key ] = $a;
@@ -220,7 +225,7 @@ if ( ! class_exists( 'Redux_Social_Profiles' ) ) {
 
 				echo '<div class="redux-social-profiles-item-enabled">';
 				$checked = ( $enabled ) ? 'checked' : '';
-				echo '<input type="checkbox" class="checkbox-' . esc_attr( $key ) . '" data-key="' . esc_attr( $key ) . '" value="1" ' . esc_attr( $checked ) . '/>';
+				echo '<input type="checkbox" id="' . esc_attr( $this->field['id'] ) . '-checkbox-' . esc_attr( $key ) . '" class="checkbox-' . esc_attr( $key ) . '" data-key="' . esc_attr( $key ) . '" value="1" ' . esc_attr( $checked ) . '/>';
 				esc_html_e( 'Enabled', 'redux-framework' );
 				echo '</div>';
 
@@ -268,6 +273,7 @@ if ( ! class_exists( 'Redux_Social_Profiles' ) ) {
 
 				echo '<div class="redux-social-profiles-item-order">';
 				echo '<input
+				        id="' . esc_attr( $this->field['id'] ) . '-item-order-' . esc_attr( $key ) . '"
                         type="hidden"
                         value="' . esc_attr( $order ) . '"
                     />';
@@ -300,6 +306,13 @@ if ( ! class_exists( 'Redux_Social_Profiles' ) ) {
 		public function output( $style = '' ) {
 			if ( ! empty( $this->value ) ) {
 				foreach ( $this->value as $arr ) {
+
+					// For customizer.
+					if ( isset( $arr['data'] ) ) {
+						$arr = rawurldecode( $arr['data'] );
+						$arr = (array) json_decode( $arr );
+					}
+
 					if ( $arr['enabled'] ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement
 						Redux_Functions_Ex::enqueue_font_awesome();
 					}
@@ -329,7 +342,7 @@ if ( ! class_exists( 'Redux_Social_Profiles' ) ) {
 				'redux-field-social-profiles',
 				$this->url . 'redux-social-profiles' . $min . '.js',
 				array( 'jquery', 'jquery-ui-sortable', 'redux-spectrum-js', 'redux-js' ),
-				time(),
+				Redux_Extension_Social_Profiles::$version,
 				true
 			);
 
@@ -344,7 +357,7 @@ if ( ! class_exists( 'Redux_Social_Profiles' ) ) {
 					'redux-field-social-profiles',
 					$this->url . 'redux-social-profiles.css',
 					array( 'redux-spectrum-css' ),
-					time()
+					Redux_Extension_Social_Profiles::$version
 				);
 			}
 		}

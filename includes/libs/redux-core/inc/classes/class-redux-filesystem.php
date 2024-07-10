@@ -83,6 +83,14 @@ if ( ! class_exists( 'Redux_Filesystem', false ) ) {
 		public $cache_folder;
 
 		/**
+		 * Kill switch.
+		 *
+		 * @var bool
+		 */
+		public $killswitch = false;
+
+
+		/**
 		 * Pass `true` when instantiating to skip using WP_Filesystem.
 		 *
 		 * @param bool $force_no_fs Force no use of the filesystem.
@@ -359,9 +367,9 @@ if ( ! class_exists( 'Redux_Filesystem', false ) ) {
 				$res = $this->mkdir( $file, $chmod );
 			} elseif ( 'rmdir' === $action ) {
 				$res = $this->rmdir( $file, $recursive );
-			} elseif ( 'copy' === $action && ! isset( $this->wp_filesystem->killswitch ) ) {
+			} elseif ( 'copy' === $action && false === $this->killswitch ) {
 				$res = $this->copy( $file, $destination, $overwrite, $chmod );
-			} elseif ( 'move' === $action && ! isset( $this->wp_filesystem->killswitch ) ) {
+			} elseif ( 'move' === $action && false === $this->killswitch ) {
 				$res = $this->move( $file, $destination, $overwrite );
 			} elseif ( 'delete' === $action ) {
 				if ( $this->is_dir( $file ) ) {
@@ -374,7 +382,7 @@ if ( ! class_exists( 'Redux_Filesystem', false ) ) {
 					$include_hidden = true;
 				}
 				$res = $this->scandir( $file, $include_hidden, $recursive );
-			} elseif ( 'put_contents' === $action && ! isset( $this->wp_filesystem->killswitch ) ) {
+			} elseif ( 'put_contents' === $action && false === $this->killswitch ) {
 				// Write a string to a file.
 				if ( isset( $this->parent->ftp_form ) && ! empty( $this->parent->ftp_form ) ) {
 					self::load_direct();
@@ -429,7 +437,7 @@ if ( ! class_exists( 'Redux_Filesystem', false ) ) {
 					}
 				}
 
-				$this->wp_filesystem->killswitch = true;
+				$this->killswitch = true;
 
 				// translators: %1$s: Upload URL.  %2$s: Codex URL.
 				$msg = '<strong>' . esc_html__( 'File Permission Issues', 'redux-framework' ) . '</strong><br/>' . sprintf( esc_html__( 'We were unable to modify required files. Please ensure that %1$s has the proper read-write permissions, or modify your wp-config.php file to contain your FTP login credentials as %2$s.', 'redux-framework' ), '<code>' . esc_url( Redux_Functions_Ex::wp_normalize_path( trailingslashit( WP_CONTENT_DIR ) ) ) . '/uploads/</code>', '<a href="https://codex.wordpress.org/Editing_wp-config.php#WordPress_Upgrade_Constants" target="_blank">' . esc_html__( 'outlined here', 'redux-framework' ) . '</a>' );
@@ -525,51 +533,31 @@ if ( ! class_exists( 'Redux_Filesystem', false ) ) {
 		 * @return bool
 		 */
 		public function put_contents( string $abs_path, string $contents, string $perms = null ): bool {
+			$return = false;
 
 			if ( ! $this->is_dir( dirname( $abs_path ) ) ) {
 				$this->mkdir( dirname( $abs_path ) );
 			}
 
-			// phpcs:ignore WordPress.PHP.NoSilencedErrors
-			// @codingStandardsIgnoreStart
-			$return = is_writable( $abs_path ) ? @file_put_contents( $abs_path, $contents ) : false;
-			// @codingStandardsIgnoreEnd
-			$this->chmod( $abs_path );
+			if ( $this->is_writable( dirname( $abs_path ) ) ) {
+				// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents, WordPress.PHP.NoSilencedErrors.Discouraged
+				$return = @file_put_contents( $abs_path, $contents );
+				$this->chmod( $abs_path );
 
-			if ( null === $perms ) {
-				$perms = $this->chmod_file;
+				if ( null === $perms ) {
+					$perms = $this->chmod_file;
+				}
 			}
 
 			if ( ! $return && $this->use_filesystem ) {
 				$abs_path = $this->get_sanitized_path( $abs_path );
-				// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_is_writable
-				$return = is_writable( $abs_path ) && $this->wp_filesystem->put_contents( $abs_path, $contents, $perms );
+				// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_is_writable, WordPress.WP.AlternativeFunctions.file_system_operations_is_writable
+				if ( $this->is_writable( dirname( $abs_path ) ) ) {
+					$return = $this->wp_filesystem->put_contents( $abs_path, $contents, $perms );
+				}
 			}
 
 			return (bool) $return;
-		}
-
-		/**
-		 * Calls file_put_contents with chmod.
-		 *
-		 * @param string $path Get a full cache path.
-		 *
-		 * @return string
-		 */
-		public function get_cache_path( string $path ): string {
-			return $this->folder . $path;
-		}
-
-		/**
-		 * Calls file_put_contents with chmod in cache directory.
-		 *
-		 * @param string $abs_path Absolute path.
-		 * @param string $contents Contents to put in the cache.
-		 *
-		 * @return bool
-		 */
-		public function put_contents_cache( string $abs_path, string $contents ): bool {
-			return $this->put_contents( $this->get_cache_path( $abs_path ), $contents );
 		}
 
 		/**
@@ -620,7 +608,7 @@ if ( ! class_exists( 'Redux_Filesystem', false ) ) {
 				$contents = '';
 
 				if ( $this->file_exists( $abs_path ) && is_file( $abs_path ) ) {
-					if ( is_writable( $abs_path ) ) { // phpcs:ignore WordPress.WP.AlternativeFunctions
+					if ( $this->is_writable( $abs_path ) ) { // phpcs:ignore WordPress.WP.AlternativeFunctions
 						ob_start();
 
 						include_once $abs_path;
@@ -806,7 +794,6 @@ if ( ! class_exists( 'Redux_Filesystem', false ) ) {
 			}
 
 			try {
-				// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_is_writable, WordPress.WP.AlternativeFunctions.file_system_operations_is_writable
 				$mkdirp = wp_mkdir_p( $abs_path );
 			} catch ( Exception $e ) {
 				$mkdirp = false;
@@ -819,8 +806,12 @@ if ( ! class_exists( 'Redux_Filesystem', false ) ) {
 				return true;
 			}
 
-			// phpcs:ignore WordPress.PHP.NoSilencedErrors, WordPress.WP.AlternativeFunctions, WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_is_writable
-			$return = is_writable( $abs_path ) && @mkdir( $abs_path, $perms, true );
+			$return = false;
+
+			if ( $this->is_writable( dirname( $abs_path ) ) ) {
+				// phpcs:ignore WordPress.PHP.NoSilencedErrors, WordPress.WP.AlternativeFunctions, WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_is_writable
+				$return = @mkdir( $abs_path, $perms, true );
+			}
 
 			if ( ! $return && $this->use_filesystem ) {
 				$abs_path = $this->get_sanitized_path( $abs_path );
@@ -845,7 +836,7 @@ if ( ! class_exists( 'Redux_Filesystem', false ) ) {
 					$current_dir .= '/' . $dir;
 
 					// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_is_writable, WordPress.WP.AlternativeFunctions.file_system_operations_is_writable
-					if ( ! $this->is_dir( $current_dir ) && is_writable( $current_dir ) ) {
+					if ( ! $this->is_dir( $current_dir ) && $this->is_writable( dirname( $current_dir ) ) ) {
 						$this->wp_filesystem->mkdir( $current_dir, $perms );
 					}
 				}
