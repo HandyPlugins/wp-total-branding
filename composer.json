@@ -18,5 +18,10 @@
   "scripts": {
     "lint": "phpcs wp-total-branding.php includes/*.php -s",
     "lint-fix": "phpcbf wp-total-branding.php includes/*.php"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   }
 }
