@@ -2,36 +2,36 @@
 Contributors:      handyplugins, m_uysl
 Tags:              branding, custom-logo, admin menu, customize, while-label
 Requires at least: 5.2
-Tested up to:      6.7
-Stable tag:        1.3
+Tested up to:      6.8
+Stable tag:        1.3.1
 License:           GPLv3
 Requires PHP:      7.1
 License URI:       http://www.gnu.org/licenses/gpl-3.0.html
 Donate link:       https://handyplugins.co/donate/
 
-Make your WordPress unique. Change or remove WordPress footprints,features and much more...
+Make your WordPress truly yours. Customize, clean up, and remove default WordPress footprints, features, and more.
 
 == Description ==
 
-WP Total Branding is complete branding solution for your WordPress. Check out features below;
+WP Total Branding is a complete branding toolkit for WordPress. Take full control over your WordPress look and feel. Explore the features below:
 
 = Features =
 
-- Remove or change site generator
-- Use your own custom login logo and modify target links and headline
-- Hide welcome screen on WordPress dashboard
-- Remove WordPress default dashboard widgets
-- Add your custom footer content to dashboard. It will affect all sites on multisite.
-- Hide admin menu items.
-- Add custom admin message.
-- Remove admin bar logo or upload your own
-- Change WordPress default email sender info.
-- Disable REST API
-- Change REST API base prefix
-- Custom CSS for login screen
-- Custom CSS for admin dashboard
-- Custom CSS for website
-- Global content: add custom content to header or footer to all websites.
+- Change or remove the WordPress site generator tag
+- Customize the login screen: add your logo, change links, and edit the headline
+- Hide the welcome screen on the WordPress dashboard
+- Remove default WordPress dashboard widgets
+- Add custom footer content to the dashboard (works across all sites in multisite)
+- Hide specific admin menu items
+- Add custom admin notices/messages
+- Remove the WordPress logo from the admin bar or upload your own
+- Customize the default WordPress email sender name and address
+- Disable the REST API
+- Change the REST API base prefix
+- Add custom CSS to the login screen
+- Add custom CSS to the admin dashboard
+- Add custom CSS to the front-end website
+- Insert global content (header or footer) across all websites
 
 = Contributing & Bug Report =
 Bug reports and pull requests are welcome on [Github](https://github.com/HandyPlugins/wp-total-branding)
@@ -63,6 +63,10 @@ Yes, indeed! Enable plugin by activating network wide and visit `Network Admin >
 
 
 == Changelog ==
+
+= 1.3.1 (April 13, 2025) =
+- Typo fix.
+- Tested with WP 6.8
 
 = 1.3 (July 10, 2024) =
 - Addressed an XSS vulnerability. Props to Artem Polynko.
