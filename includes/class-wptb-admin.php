@@ -28,7 +28,7 @@ class WPTB_Admin {
 	}
 
 	/**
-	 * Save temprorary global admin menu items
+	 * Save temporary global admin menu items
 	 * @since 1.0
 	 */
 	public function set_global_menu() {
