@@ -28,8 +28,8 @@ Redux::setSection( $opt_name, array(
 			'type'        => 'text',
 			'title'       => 'REST API Base Prefix',
 			'hint'        => array(
-				'title'   => __( 'Do not forget to update rewrite', 'wp-total-branding' ),
-				'content' => __( 'Flush rewrite rules by visiting permalinks after the change', 'wp-total-branding' ),
+				'title'   => __( 'Rewrite rules', 'wp-total-branding' ),
+				'content' => __( 'Rewrite rules are automatically flushed when this setting is saved.', 'wp-total-branding' ),
 			),
 		),
 	),

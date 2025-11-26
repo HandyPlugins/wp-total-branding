@@ -46,3 +46,19 @@ function wptb_custom_rest_base( $rest_base ) {
 	return $rest_base;
 }
 
+/**
+ * Flush rewrite rules when REST API base is changed
+ *
+ * @param array $options        Current options after save.
+ * @param array $changed_values Values that were changed.
+ * @since 1.3.2
+ *
+ * @return void
+ */
+function wptb_maybe_flush_rewrite_rules( $options, $changed_values ) {
+	if ( isset( $changed_values['rest-api-custom-base'] ) ) {
+		flush_rewrite_rules();
+	}
+}
+add_action( 'redux/options/' . WPTB_OPTION . '/saved', 'wptb_maybe_flush_rewrite_rules', 10, 2 );
+
