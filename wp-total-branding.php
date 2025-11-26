@@ -3,7 +3,7 @@
  * Plugin Name:       WP Total Branding
  * Plugin URI:        https://handyplugins.co/wp-total-branding/
  * Description:       Simple and powerful branding solution for WordPress.
- * Version:           1.3.1
+ * Version:           1.3.2
  * Requires at least: 5.2
  * Requires PHP:      7.1
  * Author:            HandyPlugins
@@ -76,7 +76,7 @@ if ( ! class_exists( 'WP_Total_Branding' ) ) :
 			}
 
 			if ( ! defined( 'WPTB_PLUGIN_VERSION' ) ) {
-				define( 'WPTB_PLUGIN_VERSION', '1.3.1' );
+				define( 'WPTB_PLUGIN_VERSION', '1.3.2' );
 			}
 
 			if ( ! defined( 'WPTB_PLUGIN_DIR' ) ) {
