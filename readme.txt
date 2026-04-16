@@ -2,8 +2,8 @@
 Contributors:      handyplugins, m_uysl
 Tags:              branding, custom-logo, admin menu, customize, while-label
 Requires at least: 5.2
-Tested up to:      6.9
-Stable tag:        1.3.2
+Tested up to:      7.0
+Stable tag:        1.3.3
 License:           GPLv3
 Requires PHP:      7.1
 License URI:       http://www.gnu.org/licenses/gpl-3.0.html
@@ -65,6 +65,9 @@ Yes, indeed! Enable plugin by activating network wide and visit `Network Admin >
 
 
 == Changelog ==
+
+= 1.3.3 (April 16, 2026) =
+- Tested with WP 7.0
 
 = 1.3.2 (November 26, 2025) =
 - Tested with WP 6.9
