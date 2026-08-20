@@ -2,7 +2,7 @@
 Contributors:      handyplugins, m_uysl
 Tags:              branding, custom-logo, admin menu, customize, while-label
 Requires at least: 5.2
-Tested up to:      7.0
+Tested up to:      7.1
 Stable tag:        1.3.3
 License:           GPLv3
 Requires PHP:      7.1
